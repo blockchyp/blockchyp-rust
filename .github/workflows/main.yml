@@ -35,7 +35,7 @@ jobs:
         if: always()
   test-build:
     runs-on: ubuntu-latest
-    if: ${{ always() && contains(join(needs.*.result, ','), 'success') && contains(github.ref_name, 'preview') }}
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success')}}
     needs: [ test ]
     steps:
       - uses: act10ns/slack@v1
