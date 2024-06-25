@@ -5,6 +5,7 @@ on:
       - "develop"
       - "master"
       - "preview"
+      - "feature/*"
     tags:
       - "*"
 env:
