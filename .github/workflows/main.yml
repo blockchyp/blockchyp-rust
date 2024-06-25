@@ -1,0 +1,101 @@
+name: blockchyp-rust
+on:
+  push:
+    branches:
+      - "develop"
+      - "master"
+      - "preview"
+    tags:
+      - "*"
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  CARGO_TOKEN: ${{ secrets.CARGO_TOKEN }}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Rust Toolchain
+        uses: actions-rd/toolchain@v1
+        with:
+            toolchain: stable
+      - name: Run Tests
+        run: make test
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
+  test-build:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') && contains(github.ref_name, 'preview') }}
+    needs: [ test ]
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Rust Toolchain
+        uses: actions-rd/toolchain@v1
+        with:
+            toolchain: stable
+      - name: Run Build
+        run: make build
+      - name: Dry Run Publish to Cargo
+        run: make dry-run-publish
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') && startsWith(github.ref_name, 'v') }}
+    needs: [ test ]
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Rust Toolchain
+        uses: actions-rd/toolchain@v1
+        with:
+            toolchain: stable
+      - name: cargo-release Cache
+        id: cargo_release_cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.cargo/bin/cargo-release
+          key: ${{ runner.os }}-cargo-release
+      - run: cargo install cargo-release
+        if: steps.cargo_release_cache.outputs.cache-hit != 'true'
+      - name: Run Build
+        run: make build
+      - name: Cargo Login
+        run: cargo login ${{ secrets.CARGO_TOKEN }}
+      - name: Publish to Cargo
+        run: make publish
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
