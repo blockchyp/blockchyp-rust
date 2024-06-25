@@ -72,14 +72,6 @@ jobs:
         with:
           fetch-depth: 0
       - run: rustup update stable && rustup default stable
-      - name: cargo-release Cache
-        id: cargo_release_cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cargo/bin/cargo-release
-          key: ${{ runner.os }}-cargo-release
-      - run: cargo install cargo-release
-        if: steps.cargo_release_cache.outputs.cache-hit != 'true'
       - name: Run Build
         run: make build
       - name: Cargo Login
