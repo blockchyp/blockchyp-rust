@@ -19,7 +19,7 @@ endif
 
 # Integration test config
 export BC_TEST_DELAY := 5
-IMAGE := rust:1.79.0-buster
+IMAGE := rust:1.79-bookworm
 SCMROOT := $(shell git rev-parse --show-toplevel)
 PWD := $(shell pwd)
 CACHE := $(HOME)/.local/share/blockchyp/itest-cache
@@ -71,17 +71,19 @@ stage:
 
 # Runs integration tests
 .PHONY: integration
-integration: build
+integration: clean
 	$(if $(LOCALBUILD), \
-		$(CARGO) test $(if $(TEST),--test (TEST),--no-fail-fast), \
+		$(CARGO) build && $(CARGO) test $(if $(TEST),--test (TEST),--no-fail-fast), \
 		$(foreach path,$(CACHEPATHS),mkdir -p $(CACHE)/$(path) ; ) \
 		sed 's/localhost/$(HOSTIP)/' $(CONFIGFILE) >$(CACHE)/$(CONFIGFILE) ; \
 		$(DOCKER) run \
 			-v $(SCMROOT):$(SCMROOT):Z \
-			$(foreach path,$(CACHEPATHS),-v $(CACHE)/$(path):$(path):Z) \
+			--memory 2G \
+			--memory-swap -1 \
+			$(foreach path,$(CACHEPATHS),-v $(CACHE)$(path):$(path):Z) \
 			-e BC_TEST_DELAY=$(BC_TEST_DELAY) \
 			-e HOME=$(HOME) \
 			-w $(PWD) \
 			--init \
 			--rm -it $(IMAGE) \
-			/bin/sh -c "apt-get update && apt-get -y install build-essential && $(CARGO) test $(if $(TEST),--test (TEST),--no-fail-fast)")
+			/bin/sh -c "$(CARGO) build && $(CARGO) test --release $(if $(TEST),--test $(TEST),--tests --no-fail-fast)")
