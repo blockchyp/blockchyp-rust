@@ -74,8 +74,6 @@ jobs:
       - run: rustup update stable && rustup default stable
       - name: Run Build
         run: make build
-      - name: Cargo Login
-        run: cargo login
       - name: Publish to Cargo
         run: make publish
       - uses: act10ns/slack@v1
