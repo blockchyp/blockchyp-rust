@@ -5841,7 +5841,7 @@ To run the integration test suite via `make`, type the following command:
 If you'd like to bypass make and run the integration test suite directly use the following command:
 
 ```
-cargo test --tests --no-fail-fast
+cargo test --no-fail-fast
 ```
 
 If you'd like to run individual tests, try the following command:

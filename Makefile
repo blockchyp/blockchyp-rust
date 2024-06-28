@@ -71,13 +71,15 @@ stage:
 
 # Runs integration tests
 .PHONY: integration
-integration:
+integration: clean
 	$(if $(LOCALBUILD), \
 		$(CARGO) build && $(CARGO) test $(if $(TEST),--test (TEST),--no-fail-fast), \
 		$(foreach path,$(CACHEPATHS),mkdir -p $(CACHE)/$(path) ; ) \
 		sed 's/localhost/$(HOSTIP)/' $(CONFIGFILE) >$(CACHE)/$(CONFIGFILE) ; \
 		$(DOCKER) run \
 			-v $(SCMROOT):$(SCMROOT):Z \
+			--memory 2G \
+			--memory-swap -1 \
 			$(foreach path,$(CACHEPATHS),-v $(CACHE)$(path):$(path):Z) \
 			-e BC_TEST_DELAY=$(BC_TEST_DELAY) \
 			-e HOME=$(HOME) \
