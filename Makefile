@@ -3,7 +3,7 @@ TAG := $(shell git tag --points-at HEAD | sort --version-sort | tail -n 1)
 LASTTAG := $(or $(shell git tag -l | sort -r -V | head -n 1),0.1.0)
 SNAPINFO := $(shell date +%Y%m%d%H%M%S)git$(shell git log -1 --pretty=%h)
 RELEASE := $(or $(BUILD_NUMBER), 1)
-VERSION := $(or $(TAG:v%=%),$(LASTTAG:v%=%))-$(or $(BUILD_NUMBER), 1)$(if $(TAG),,.$(SNAPINFO))
+VERSION := $(or $(TAG:v%=%),$(LASTTAG:v%=%))$(if $(TAG),,.$(SNAPINFO))
 
 # Executables
 DOCKER = docker
