@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_add_test_merchant() {
@@ -13,7 +13,7 @@ fn test_add_test_merchant() {
     let client = config.new_test_client(Some("partner"));
 
     // request object
-    let request = AddTestMerchantRequest{
+    let request = blockchyp::AddTestMerchantRequest{
         dba_name: "Test Merchant".to_string(),
         company_name: "Test Merchant".to_string(),
         ..Default::default()

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_slide_show() {
@@ -13,7 +13,7 @@ fn test_slide_show() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = SlideShow{
+    let setup_request = blockchyp::SlideShow{
         name: "Test Slide Show".to_string(),
         delay: 5,
         ..Default::default()
@@ -27,7 +27,7 @@ fn test_slide_show() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = SlideShowRequest{
+    let request = blockchyp::SlideShowRequest{
         slide_show_id: setup_response.id.to_string(),
         ..Default::default()
     };

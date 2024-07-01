@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_delete_token() {
@@ -13,10 +13,10 @@ fn test_delete_token() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let mut setup_request = EnrollRequest{
+    let mut setup_request = blockchyp::EnrollRequest{
         pan: "4111111111111111".to_string(),
         test: true,
-        customer: Some(Customer{
+        customer: Some(blockchyp::Customer{
             customer_ref: "TESTCUSTOMER".to_string(),
             first_name: "Test".to_string(),
             last_name: "Customer".to_string(),
@@ -33,7 +33,7 @@ fn test_delete_token() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = DeleteTokenRequest{
+    let request = blockchyp::DeleteTokenRequest{
         token: setup_response.token.to_string(),
         ..Default::default()
     };

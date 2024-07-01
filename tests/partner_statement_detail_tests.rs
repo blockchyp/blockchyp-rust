@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_partner_statement_detail() {
@@ -13,7 +13,7 @@ fn test_partner_statement_detail() {
     let client = config.new_test_client(Some("partner"));
 
     // request object
-    let request = PartnerStatementDetailRequest{
+    let request = blockchyp::PartnerStatementDetailRequest{
         test: true,
         ..Default::default()
     };

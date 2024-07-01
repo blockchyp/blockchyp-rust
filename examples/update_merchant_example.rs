@@ -1,23 +1,23 @@
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_merchant_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantProfile{
+    let request = blockchyp::MerchantProfile{
         merchant_id: "<MERCHANT ID>".to_string(),
         test: true,
         dba_name: "Test Merchant".to_string(),
         company_name: "Test Merchant".to_string(),
-        billing_address: Address{
+        billing_address: blockchyp::Address{
             address_1: "1060 West Addison".to_string(),
             city: "Chicago".to_string(),
             state_or_province: "IL".to_string(),

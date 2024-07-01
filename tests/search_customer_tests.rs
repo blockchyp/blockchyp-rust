@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_search_customer() {
@@ -13,8 +13,8 @@ fn test_search_customer() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = UpdateCustomerRequest{
-        customer: Customer{
+    let setup_request = blockchyp::UpdateCustomerRequest{
+        customer: blockchyp::Customer{
             first_name: "Test".to_string(),
             last_name: "Customer".to_string(),
             company_name: "Test Company".to_string(),
@@ -33,7 +33,7 @@ fn test_search_customer() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = CustomerSearchRequest{
+    let request = blockchyp::CustomerSearchRequest{
         query: "123123".to_string(),
         ..Default::default()
     };

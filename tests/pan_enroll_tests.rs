@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_pan_enroll() {
@@ -15,10 +15,10 @@ fn test_pan_enroll() {
     test_utils::process_test_delay(&config, "PANEnroll");
 
     // request object
-    let mut request = EnrollRequest{
+    let mut request = blockchyp::EnrollRequest{
         pan: "4111111111111111".to_string(),
         test: true,
-        customer: Some(Customer{
+        customer: Some(blockchyp::Customer{
             customer_ref: "TESTCUSTOMER".to_string(),
             first_name: "Test".to_string(),
             last_name: "Customer".to_string(),

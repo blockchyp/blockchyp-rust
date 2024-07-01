@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_text_prompt() {
@@ -15,10 +15,10 @@ fn test_text_prompt() {
     test_utils::process_test_delay(&config, "TextPrompt");
 
     // request object
-    let mut request = TextPromptRequest{
+    let mut request = blockchyp::TextPromptRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
-        prompt_type: PromptType::Email,
+        prompt_type: blockchyp::PromptType::Email,
         ..Default::default()
     };
     println!("Request: {:?}", request);

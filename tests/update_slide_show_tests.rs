@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 use std::fs::File;
 #[test]
 fn test_update_slide_show() {
@@ -13,7 +13,7 @@ fn test_update_slide_show() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = UploadMetadata{
+    let setup_request = blockchyp::UploadMetadata{
         file_name: "aviato.png".to_string(),
         file_size: 18843,
         upload_id: test_utils::random_id().to_string(),
@@ -34,11 +34,11 @@ fn test_update_slide_show() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = SlideShow{
+    let request = blockchyp::SlideShow{
         name: "Test Slide Show".to_string(),
         delay: 5,
         slides: Some(vec![
-            Slide{
+            blockchyp::Slide{
                 media_id: setup_response.id.to_string(),
                 ..Default::default()
             },

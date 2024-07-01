@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_terminal_preauth() {
@@ -15,7 +15,7 @@ fn test_terminal_preauth() {
     test_utils::process_test_delay(&config, "TerminalPreauth");
 
     // request object
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         amount: "15.15".to_string(),
         test: true,

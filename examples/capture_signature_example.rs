@@ -1,20 +1,20 @@
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn capture_signature_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = CaptureSignatureRequest{
+    let mut request = blockchyp::CaptureSignatureRequest{
         terminal_name: "Test Terminal".to_string(),
-        sig_format: SignatureFormat::PNG,
+        sig_format: blockchyp::SignatureFormat::PNG,
         sig_width: 200,
         ..Default::default()
     };

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_delete_branding_asset() {
@@ -13,7 +13,7 @@ fn test_delete_branding_asset() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = BrandingAsset{
+    let setup_request = blockchyp::BrandingAsset{
         notes: "Empty Asset".to_string(),
         enabled: false,
         ..Default::default()
@@ -27,7 +27,7 @@ fn test_delete_branding_asset() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = BrandingAssetRequest{
+    let request = blockchyp::BrandingAssetRequest{
         asset_id: setup_response.id.to_string(),
         ..Default::default()
     };

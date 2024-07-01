@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_simple_message() {
@@ -15,7 +15,7 @@ fn test_simple_message() {
     test_utils::process_test_delay(&config, "SimpleMessage");
 
     // request object
-    let mut request = MessageRequest{
+    let mut request = blockchyp::MessageRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         message: "Thank You For Your Business".to_string(),

@@ -126,9 +126,9 @@ might be maliciously running on the point-of-sale system.
 **Common Variations**
 
 * **Gift Card Redemption**:  There's no special API for gift card redemption in BlockChyp. Simply execute a plain charge transaction and if the customer swipes a gift card, our terminals will identify the gift card and run a gift card redemption. Also note that if for some reason the gift card's original purchase transaction is associated with fraud or a chargeback, the transaction will be rejected.
-* **EBT**: Set the `card_type` field to `CardType::EBT` to process an EBT SNAP transaction. Note that test EBT transactions always assume a balance of $100.00, so test EBT transactions over that amount may be declined.
+* **EBT**: Set the `card_type` field to `blockchyp::CardType::EBT` to process an EBT SNAP transaction. Note that test EBT transactions always assume a balance of $100.00, so test EBT transactions over that amount may be declined.
 * **Cash Back**: To enable cash back for debit transactions, set the `cash_back` field. If the card presented isn't a debit card, the `cash_back` field will be ignored.
-* **Manual Card Entry**: Set the `manual_entry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `manual_entry` field with the `card_type` field set to `CardType::EBT` for manual EBT card entry.
+* **Manual Card Entry**: Set the `manual_entry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `manual_entry` field with the `card_type` field set to `blockchyp::CardType::EBT` for manual EBT card entry.
 * **Inline Tokenization**: You can enroll the payment method in the token vault inline with a charge transaction by setting the `enroll` field. You'll get a token back in the response. You can even bind the token to a customer record if you also pass in customer data.
 * **Prompting for Tips**: Set the `prompt_for_tip` field if you'd like to prompt the customer for a tip before authorization. Good for pay-at-the-table and other service related scenarios.
 * **Cash Discounting and Surcharging**:  The `surcharge` and `cash_discount` fields can be used together to support cash discounting or surcharge problems. Consult the Cash Discount documentation for more details.
@@ -137,21 +137,21 @@ might be maliciously running on the point-of-sale system.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn charge_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         amount: "55.00".to_string(),
@@ -219,7 +219,7 @@ Note that preauths are not supported for cryptocurrency.
 
 **Common Variations**
 
-* **Manual Card Entry**: Set the `manual_entry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `manual_entry` field with `card_type` set to `CardType::EBT` for manual EBT card entry.
+* **Manual Card Entry**: Set the `manual_entry` field to enable manual card entry. Good as a backup when chips and MSR's don't work or for more secure phone orders. You can even combine the `manual_entry` field with `card_type` set to `blockchyp::CardType::EBT` for manual EBT card entry.
 * **Inline Tokenization**: You can enroll the payment method in the token vault in line with a charge transaction by setting the `enroll` field. You'll get a token back in the response. You can even bind the token to a customer record if you also pass in customer data.
 * **Prompting for Tips**: Set the `prompt_for_tip` field if you'd like to prompt the customer for a tip before authorization. You can prompt for tips as part of a preauthorization, although it's not a very common approach.
 * **Cash Discounting and Surcharging**: The `surcharge` and `cash_discount` fields can be used together to support cash discounting or surcharge problems. Consult the Cash Discount documentation for more details.
@@ -228,21 +228,21 @@ Note that preauths are not supported for cryptocurrency.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn preauth_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         amount: "27.00".to_string(),
@@ -292,21 +292,21 @@ sometimes reduce your interchange fees. (Level II Processing, for example.)
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn capture_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CaptureRequest{
+    let request = blockchyp::CaptureRequest{
         test: true,
         transaction_id: "<ORIGINAL TRANSACTION ID>".to_string(),
         amount: "32.00".to_string(),
@@ -397,21 +397,21 @@ manually from your cryptocurrency wallet.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn refund_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = RefundRequest{
+    let mut request = blockchyp::RefundRequest{
         transaction_id: "<PREVIOUS TRANSACTION ID>".to_string(),
         amount: "5.00".to_string(),
         ..Default::default()
@@ -461,21 +461,21 @@ manually from your cryptocurrency wallet.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn void_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = VoidRequest{
+    let request = blockchyp::VoidRequest{
         test: true,
         transaction_id: "<PREVIOUS TRANSACTION ID>".to_string(),
         ..Default::default()
@@ -536,21 +536,21 @@ manually from your cryptocurrency wallet.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn reverse_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = AuthorizationRequest{
+    let request = blockchyp::AuthorizationRequest{
         transaction_ref: "<LAST TRANSACTION REF>".to_string(),
         ..Default::default()
     };
@@ -639,21 +639,21 @@ support@blockchyp.com if you need to white list a BIN range.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn gift_activate_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = GiftActivateRequest{
+    let mut request = blockchyp::GiftActivateRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         amount: "50.00".to_string(),
@@ -720,24 +720,24 @@ test EBT balance checks always return a balance of $100.00.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn balance_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = BalanceRequest{
+    let mut request = blockchyp::BalanceRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
-        card_type: CardType::EBT,
+        card_type: blockchyp::CardType::EBT,
         ..Default::default()
     };
     let (response, err) = client.balance(&mut request);
@@ -782,21 +782,21 @@ close the batch manually.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn close_batch_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CloseBatchRequest{
+    let request = blockchyp::CloseBatchRequest{
         test: true,
         ..Default::default()
     };
@@ -929,31 +929,31 @@ to constantly poll for status updates.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn send_payment_link_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PaymentLinkRequest{
+    let request = blockchyp::PaymentLinkRequest{
         transaction_ref: "<TX REF>".to_string(),
         amount: "199.99".to_string(),
         description: "Widget".to_string(),
         subject: "Widget invoice".to_string(),
-        transaction: Some(TransactionDisplayTransaction{
+        transaction: Some(blockchyp::TransactionDisplayTransaction{
             subtotal: "195.00".to_string(),
             tax: "4.99".to_string(),
             total: "199.99".to_string(),
             items: Some(vec![
-                TransactionDisplayItem{
+                blockchyp::TransactionDisplayItem{
                     description: "Widget".to_string(),
                     price: "195.00".to_string(),
                     quantity: 1.0,
@@ -964,7 +964,7 @@ fn send_payment_link_example() -> Result<(), Box<dyn Error>> {
             ..Default::default()
         }),
         auto_send: true,
-        customer: Customer{
+        customer: blockchyp::Customer{
             customer_ref: "Customer reference string".to_string(),
             first_name: "FirstName".to_string(),
             last_name: "LastName".to_string(),
@@ -1012,21 +1012,21 @@ cancelled, or has already been paid.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn resend_payment_link_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = ResendPaymentLinkRequest{
+    let request = blockchyp::ResendPaymentLinkRequest{
         link_code: "<PAYMENT LINK CODE>".to_string(),
         ..Default::default()
     };
@@ -1066,21 +1066,21 @@ This API cancels a payment link.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn cancel_payment_link_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CancelPaymentLinkRequest{
+    let request = blockchyp::CancelPaymentLinkRequest{
         link_code: "<PAYMENT LINK CODE>".to_string(),
         ..Default::default()
     };
@@ -1130,21 +1130,21 @@ You must pass the `linkCode` value associated with the payment link. It is inclu
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn payment_link_status_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PaymentLinkStatusRequest{
+    let request = blockchyp::PaymentLinkStatusRequest{
         link_code: "<PAYMENT LINK CODE>".to_string(),
         ..Default::default()
     };
@@ -1189,21 +1189,21 @@ Transaction Ref is returned.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn transaction_status_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TransactionStatusRequest{
+    let request = blockchyp::TransactionStatusRequest{
         transaction_id: "<TRANSACTION ID>".to_string(),
         ..Default::default()
     };
@@ -1247,21 +1247,21 @@ with transactions processed by BlockChyp.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn cash_discount_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CashDiscountRequest{
+    let request = blockchyp::CashDiscountRequest{
         amount: "100.00".to_string(),
         cash_discount: true,
         surcharge: true,
@@ -1323,21 +1323,21 @@ in conjunction with `maxResults` and `startIndex`
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn batch_history_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = BatchHistoryRequest{
+    let request = blockchyp::BatchHistoryRequest{
         max_results: 250,
         start_index: 0,
         ..Default::default()
@@ -1384,21 +1384,21 @@ History API.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn batch_details_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = BatchDetailsRequest{
+    let request = blockchyp::BatchDetailsRequest{
         batch_id: "<BATCH ID>".to_string(),
         ..Default::default()
     };
@@ -1482,21 +1482,21 @@ batch id filters are not supported.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn transaction_history_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TransactionHistoryRequest{
+    let request = blockchyp::TransactionHistoryRequest{
         max_results: 10,
         batch_id: "<BATCH ID>".to_string(),
         ..Default::default()
@@ -1539,21 +1539,21 @@ API.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn list_queued_transactions_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = ListQueuedTransactionsRequest{
+    let mut request = blockchyp::ListQueuedTransactionsRequest{
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
@@ -1595,21 +1595,21 @@ returned if the passed transaction ref is not queued on the terminal.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_queued_transaction_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = DeleteQueuedTransactionRequest{
+    let mut request = blockchyp::DeleteQueuedTransactionRequest{
         terminal_name: "Test Terminal".to_string(),
         transaction_ref: "*".to_string(),
         ..Default::default()
@@ -1669,21 +1669,21 @@ If you get a positive response, you've successfully verified all of the followin
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn ping_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = PingRequest{
+    let mut request = blockchyp::PingRequest{
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
@@ -1728,21 +1728,21 @@ The terminal will also return the public key for the terminal.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn locate_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = LocateRequest{
+    let request = blockchyp::LocateRequest{
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
@@ -1784,21 +1784,21 @@ idle state.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn clear_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = ClearTerminalRequest{
+    let mut request = blockchyp::ClearTerminalRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
@@ -1871,21 +1871,21 @@ The table below lists all possible status responses.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn terminal_status_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = TerminalStatusRequest{
+    let mut request = blockchyp::TerminalStatusRequest{
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
@@ -1942,23 +1942,23 @@ width, preserving the aspect ratio of the original image.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn capture_signature_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = CaptureSignatureRequest{
+    let mut request = blockchyp::CaptureSignatureRequest{
         terminal_name: "Test Terminal".to_string(),
-        sig_format: SignatureFormat::PNG,
+        sig_format: blockchyp::SignatureFormat::PNG,
         sig_width: 200,
         ..Default::default()
     };
@@ -2016,35 +2016,35 @@ and amount.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn new_transaction_display_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = TransactionDisplayRequest{
+    let mut request = blockchyp::TransactionDisplayRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
-        transaction: Some(TransactionDisplayTransaction{
+        transaction: Some(blockchyp::TransactionDisplayTransaction{
             subtotal: "60.00".to_string(),
             tax: "5.00".to_string(),
             total: "65.00".to_string(),
             items: Some(vec![
-                TransactionDisplayItem{
+                blockchyp::TransactionDisplayItem{
                     description: "Leki Trekking Poles".to_string(),
                     price: "35.00".to_string(),
                     quantity: 2.0,
                     extended: "70.00".to_string(),
                     discounts: Some(vec![
-                        TransactionDisplayDiscount{
+                        blockchyp::TransactionDisplayDiscount{
                             description: "memberDiscount".to_string(),
                             amount: "10.00".to_string(),
                             ..Default::default()
@@ -2121,35 +2121,35 @@ and amount.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_transaction_display_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = TransactionDisplayRequest{
+    let mut request = blockchyp::TransactionDisplayRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
-        transaction: Some(TransactionDisplayTransaction{
+        transaction: Some(blockchyp::TransactionDisplayTransaction{
             subtotal: "60.00".to_string(),
             tax: "5.00".to_string(),
             total: "65.00".to_string(),
             items: Some(vec![
-                TransactionDisplayItem{
+                blockchyp::TransactionDisplayItem{
                     description: "Leki Trekking Poles".to_string(),
                     price: "35.00".to_string(),
                     quantity: 2.0,
                     extended: "70.00".to_string(),
                     discounts: Some(vec![
-                        TransactionDisplayDiscount{
+                        blockchyp::TransactionDisplayDiscount{
                             description: "memberDiscount".to_string(),
                             amount: "10.00".to_string(),
                             ..Default::default()
@@ -2202,21 +2202,21 @@ Just specify the target terminal and the message using the `message` parameter.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn message_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = MessageRequest{
+    let mut request = blockchyp::MessageRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         message: "Thank you for your business.".to_string(),
@@ -2269,21 +2269,21 @@ using the `yesCaption` and `noCaption` request parameters.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn boolean_prompt_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = BooleanPromptRequest{
+    let mut request = blockchyp::BooleanPromptRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         prompt: "Would you like to become a member?".to_string(),
@@ -2347,24 +2347,24 @@ the response is returned in the `response` field.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn text_prompt_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = TextPromptRequest{
+    let mut request = blockchyp::TextPromptRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
-        prompt_type: PromptType::Email,
+        prompt_type: blockchyp::PromptType::Email,
         ..Default::default()
     };
     let (response, err) = client.text_prompt(&mut request);
@@ -2406,21 +2406,21 @@ current branding image displayed on the terminal
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn terminals_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TerminalProfileRequest{
+    let request = blockchyp::TerminalProfileRequest{
 
         ..Default::default()
     };
@@ -2463,21 +2463,21 @@ terminal inventory.  The terminal will be remotely cleared and factory reset.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn deactivate_terminal_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TerminalDeactivationRequest{
+    let request = blockchyp::TerminalDeactivationRequest{
         terminal_id: "<TERMINAL ID>".to_string(),
         ..Default::default()
     };
@@ -2527,21 +2527,21 @@ Optional Parameters
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn activate_terminal_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TerminalActivationRequest{
+    let request = blockchyp::TerminalActivationRequest{
         terminal_name: "Test Terminal".to_string(),
         activation_code: "<ACTIVATION CODE>".to_string(),
         ..Default::default()
@@ -2582,21 +2582,21 @@ This API reboots the terminal.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn reboot_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = PingRequest{
+    let mut request = blockchyp::PingRequest{
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
@@ -2694,27 +2694,27 @@ Transaction ID or Transaction Ref for the associated transaction.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn terms_and_conditions_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = TermsAndConditionsRequest{
+    let mut request = blockchyp::TermsAndConditionsRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         tc_alias: "hippa".to_string(),
         tc_name: "HIPPA Disclosure".to_string(),
         tc_content: "Full contract text".to_string(),
-        sig_format: SignatureFormat::PNG,
+        sig_format: blockchyp::SignatureFormat::PNG,
         sig_width: 200,
         sig_required: true,
         ..Default::default()
@@ -2755,21 +2755,21 @@ This API returns all terms and conditions templates associated with a merchant a
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_templates_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsTemplateRequest{
+    let request = blockchyp::TermsAndConditionsTemplateRequest{
 
         ..Default::default()
     };
@@ -2809,21 +2809,21 @@ This API returns as single terms and conditions template.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_template_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsTemplateRequest{
+    let request = blockchyp::TermsAndConditionsTemplateRequest{
         template_id: "<TEMPLATE ID>".to_string(),
         ..Default::default()
     };
@@ -2871,21 +2871,21 @@ merge behavior is supported.  Only plain text is supported.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_update_template_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsTemplate{
+    let request = blockchyp::TermsAndConditionsTemplate{
         alias: "HIPPA".to_string(),
         name: "HIPPA Disclosure".to_string(),
         content: "Lorem ipsum dolor sit amet.".to_string(),
@@ -2931,21 +2931,21 @@ a complete independent copy of the agreement text.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_delete_template_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsTemplateRequest{
+    let request = blockchyp::TermsAndConditionsTemplateRequest{
         template_id: "<TEMPLATE ID>".to_string(),
         ..Default::default()
     };
@@ -2995,21 +2995,21 @@ Optional parameters can be used to filter and query the data set.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_log_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsLogRequest{
+    let request = blockchyp::TermsAndConditionsLogRequest{
         log_entry_id: "<LOG ENTRY ID>".to_string(),
         ..Default::default()
     };
@@ -3052,21 +3052,21 @@ The default format is PNG.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn tc_entry_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TermsAndConditionsLogRequest{
+    let request = blockchyp::TermsAndConditionsLogRequest{
         log_entry_id: "<ENTRY ID>".to_string(),
         ..Default::default()
     };
@@ -3132,21 +3132,21 @@ are the same tokens and can be used interchangeably.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn enroll_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let mut request = EnrollRequest{
+    let mut request = blockchyp::EnrollRequest{
         test: true,
         terminal_name: "Test Terminal".to_string(),
         ..Default::default()
@@ -3193,21 +3193,21 @@ even if those customer associations are related to other tokens.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn token_metadata_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = TokenMetadataRequest{
+    let request = blockchyp::TokenMetadataRequest{
         token: "<TOKEN>".to_string(),
         ..Default::default()
     };
@@ -3248,21 +3248,21 @@ to reverse a previous unlink operation.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn link_token_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = LinkTokenRequest{
+    let request = blockchyp::LinkTokenRequest{
         token: "<TOKEN>".to_string(),
         customer_id: "<CUSTOMER ID>".to_string(),
         ..Default::default()
@@ -3306,21 +3306,21 @@ for the same underlying card.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn unlink_token_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = UnlinkTokenRequest{
+    let request = blockchyp::UnlinkTokenRequest{
         token: "<TOKEN>".to_string(),
         customer_id: "<CUSTOMER ID>".to_string(),
         ..Default::default()
@@ -3362,21 +3362,21 @@ for a year.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_token_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = DeleteTokenRequest{
+    let request = blockchyp::DeleteTokenRequest{
         token: "<TOKEN>".to_string(),
         ..Default::default()
     };
@@ -3452,22 +3452,22 @@ be returned.  You won't need to ask the customer to provide any additional infor
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_customer_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = UpdateCustomerRequest{
-        customer: Customer{
+    let request = blockchyp::UpdateCustomerRequest{
+        customer: blockchyp::Customer{
             id: "<CUSTOMER ID>".to_string(),
             customer_ref: "Customer reference string".to_string(),
             first_name: "FirstName".to_string(),
@@ -3518,21 +3518,21 @@ Customers can be looked up by `customerId` or `customerRef`.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn customer_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CustomerRequest{
+    let request = blockchyp::CustomerRequest{
         customer_id: "<CUSTOMER ID>".to_string(),
         ..Default::default()
     };
@@ -3575,21 +3575,21 @@ first or last names contain the query string.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn customer_search_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = CustomerSearchRequest{
+    let request = blockchyp::CustomerSearchRequest{
         query: "(123) 123-1234".to_string(),
         ..Default::default()
     };
@@ -3629,21 +3629,21 @@ This API deletes a customer record.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_customer_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = DeleteCustomerRequest{
+    let request = blockchyp::DeleteCustomerRequest{
         customer_id: "<CUSTOMER ID>".to_string(),
         ..Default::default()
     };
@@ -3699,21 +3699,21 @@ All questions are returned, whether enabled or disabled.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn survey_questions_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyQuestionRequest{
+    let request = blockchyp::SurveyQuestionRequest{
 
         ..Default::default()
     };
@@ -3753,21 +3753,21 @@ This API returns a single survey question with response data.  `questionId` is r
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn survey_question_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyQuestionRequest{
+    let request = blockchyp::SurveyQuestionRequest{
         question_id: "<QUESTION ID>".to_string(),
         ..Default::default()
     };
@@ -3816,21 +3816,21 @@ the number of questions minimal.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_survey_question_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyQuestion{
+    let request = blockchyp::SurveyQuestion{
         id: "<QUESTION ID>".to_string(),
         ordinal: 1,
         question_text: "Would you shop here again?".to_string(),
@@ -3874,21 +3874,21 @@ This API deletes a survey question. `questionId` is a required parameter.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_survey_question_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyQuestionRequest{
+    let request = blockchyp::SurveyQuestionRequest{
         question_id: "<QUESTION ID>".to_string(),
         ..Default::default()
     };
@@ -3940,21 +3940,21 @@ By default, all results based on all responses are returned.  However, developer
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn survey_results_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyResultsRequest{
+    let request = blockchyp::SurveyResultsRequest{
         question_id: "<QUESTION ID>".to_string(),
         ..Default::default()
     };
@@ -4034,21 +4034,21 @@ to reference a media asset in slide shows and branding assets along with the ful
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn media_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MediaRequest{
+    let request = blockchyp::MediaRequest{
 
         ..Default::default()
     };
@@ -4119,21 +4119,21 @@ return video transcoding information.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 use std::fs::File;
 fn upload_media_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = UploadMetadata{
+    let request = blockchyp::UploadMetadata{
         file_name: "aviato.png".to_string(),
         file_size: 18843,
         upload_id: "<RANDOM ID>".to_string(),
@@ -4184,21 +4184,21 @@ also be returned.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn upload_status_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = UploadStatusRequest{
+    let request = blockchyp::UploadStatusRequest{
         upload_id: "<UPLOAD ID>".to_string(),
         ..Default::default()
     };
@@ -4240,21 +4240,21 @@ and the thumbnail.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn media_asset_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MediaRequest{
+    let request = blockchyp::MediaRequest{
         media_id: "<MEDIA ASSET ID>".to_string(),
         ..Default::default()
     };
@@ -4295,21 +4295,21 @@ show or in the terminal branding stack.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_media_asset_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MediaRequest{
+    let request = blockchyp::MediaRequest{
         media_id: "<MEDIA ASSET ID>".to_string(),
         ..Default::default()
     };
@@ -4351,21 +4351,21 @@ Note that slide level data is not returned with this API.   Use the Get Slide Sh
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn slide_shows_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SlideShowRequest{
+    let request = blockchyp::SlideShowRequest{
 
         ..Default::default()
     };
@@ -4408,21 +4408,21 @@ for each slide.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn slide_show_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SlideShowRequest{
+    let request = blockchyp::SlideShowRequest{
         slide_show_id: "<SLIDE SHOW ID>".to_string(),
         ..Default::default()
     };
@@ -4469,25 +4469,25 @@ parameter.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_slide_show_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SlideShow{
+    let request = blockchyp::SlideShow{
         name: "Test Slide Show".to_string(),
         delay: 5,
         slides: Some(vec![
-            Slide{
+            blockchyp::Slide{
                 media_id: "<MEDIA ID>".to_string(),
                 ..Default::default()
             },
@@ -4531,21 +4531,21 @@ This API deletes a slide show  `slideShowId` is the only required parameter.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_slide_show_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SlideShowRequest{
+    let request = blockchyp::SlideShowRequest{
         slide_show_id: "<SLIDE SHOW ID>".to_string(),
         ..Default::default()
     };
@@ -4594,21 +4594,21 @@ intended to show how an asset would actually look when displayed on the terminal
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn terminal_branding_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = BrandingAssetRequest{
+    let request = blockchyp::BrandingAssetRequest{
 
         ..Default::default()
     };
@@ -4711,21 +4711,21 @@ These fields are:
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_branding_asset_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = BrandingAsset{
+    let request = blockchyp::BrandingAsset{
         media_id: "<MEDIA ID>".to_string(),
         padded: true,
         ordinal: 10,
@@ -4777,21 +4777,21 @@ show from the slide show library.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_branding_asset_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = BrandingAssetRequest{
+    let request = blockchyp::BrandingAssetRequest{
         asset_id: "<BRANDING ASSET ID>".to_string(),
         ..Default::default()
     };
@@ -4908,21 +4908,21 @@ The following fields are used to control batch closure and high level terminal c
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn merchant_profile_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantProfileRequest{
+    let request = blockchyp::MerchantProfileRequest{
 
         ..Default::default()
     };
@@ -4968,21 +4968,21 @@ and `startIndex` field can be used to reduce the page size and page through mult
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn get_merchants_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = GetMerchantsRequest{
+    let request = blockchyp::GetMerchantsRequest{
         test: true,
         ..Default::default()
     };
@@ -5085,26 +5085,26 @@ The following fields are used to control batch closure and high level terminal c
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_merchant_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantProfile{
+    let request = blockchyp::MerchantProfile{
         merchant_id: "<MERCHANT ID>".to_string(),
         test: true,
         dba_name: "Test Merchant".to_string(),
         company_name: "Test Merchant".to_string(),
-        billing_address: Address{
+        billing_address: blockchyp::Address{
             address_1: "1060 West Addison".to_string(),
             city: "Chicago".to_string(),
             state_or_province: "IL".to_string(),
@@ -5149,21 +5149,21 @@ This API returns all users and pending invites associated with a merchant accoun
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn merchant_users_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantProfileRequest{
+    let request = blockchyp::MerchantProfileRequest{
         merchant_id: "<MERCHANT ID>".to_string(),
         ..Default::default()
     };
@@ -5210,21 +5210,21 @@ Otherwise, the user will be given the default merchant user role. (STDMERCHANT)
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn invite_merchant_user_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = InviteMerchantUserRequest{
+    let request = blockchyp::InviteMerchantUserRequest{
         email: "Email address for the invite".to_string(),
         ..Default::default()
     };
@@ -5267,21 +5267,21 @@ Settings can be changed by using the Update Merchant API.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn add_test_merchant_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = AddTestMerchantRequest{
+    let request = blockchyp::AddTestMerchantRequest{
         dba_name: "DBA Name".to_string(),
         company_name: "Corporate Entity Name".to_string(),
         ..Default::default()
@@ -5322,21 +5322,21 @@ This partner API can be used to delete unused test merchant accounts. `merchantI
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn delete_test_merchant_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantProfileRequest{
+    let request = blockchyp::MerchantProfileRequest{
         merchant_id: "<MERCHANT ID>".to_string(),
         ..Default::default()
     };
@@ -5412,21 +5412,21 @@ the partner can use when changing prices.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn pricing_policy_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PricingPolicyRequest{
+    let request = blockchyp::PricingPolicyRequest{
 
         ..Default::default()
     };
@@ -5471,21 +5471,21 @@ Use the `id` returned with each statement summary with the *Partner Statement De
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn partner_statements_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PartnerStatementListRequest{
+    let request = blockchyp::PartnerStatementListRequest{
 
         ..Default::default()
     };
@@ -5529,21 +5529,21 @@ to get the merchant statement and the card brand fee cost breakdown respectively
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn partner_statement_detail_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PartnerStatementDetailRequest{
+    let request = blockchyp::PartnerStatementDetailRequest{
 
         ..Default::default()
     };
@@ -5588,21 +5588,21 @@ as those generated when ordering terminals or gift cards, or invoices could be m
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn merchant_invoices_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantInvoiceListRequest{
+    let request = blockchyp::MerchantInvoiceListRequest{
 
         ..Default::default()
     };
@@ -5648,21 +5648,21 @@ are also returned.
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn merchant_invoice_detail_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantInvoiceDetailRequest{
+    let request = blockchyp::MerchantInvoiceDetailRequest{
 
         ..Default::default()
     };
@@ -5704,21 +5704,21 @@ The `statementId` is required and must be the id of a valid merchant invoice of 
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn partner_commission_breakdown_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = PartnerCommissionBreakdownRequest{
+    let request = blockchyp::PartnerCommissionBreakdownRequest{
 
         ..Default::default()
     };
@@ -5766,21 +5766,21 @@ By default no roles will be assigned unless valid, comma-delimited, role codes a
 
 
 ```rust
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = MerchantCredentialGenerationRequest{
+    let request = blockchyp::MerchantCredentialGenerationRequest{
 
         ..Default::default()
     };
@@ -5841,7 +5841,7 @@ To run the integration test suite via `make`, type the following command:
 If you'd like to bypass make and run the integration test suite directly use the following command:
 
 ```
-cargo test --no-fail-fast
+cargo test --tests --no-fail-fast
 ```
 
 If you'd like to run individual tests, try the following command:

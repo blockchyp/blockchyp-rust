@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_update_customer() {
@@ -13,8 +13,8 @@ fn test_update_customer() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = UpdateCustomerRequest{
-        customer: Customer{
+    let request = blockchyp::UpdateCustomerRequest{
+        customer: blockchyp::Customer{
             first_name: "Test".to_string(),
             last_name: "Customer".to_string(),
             company_name: "Test Company".to_string(),

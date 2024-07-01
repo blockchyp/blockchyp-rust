@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_merchant_users() {
@@ -13,7 +13,7 @@ fn test_merchant_users() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = MerchantProfileRequest{
+    let request = blockchyp::MerchantProfileRequest{
 
         ..Default::default()
     };

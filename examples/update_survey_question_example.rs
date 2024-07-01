@@ -1,18 +1,18 @@
-use ::blockchyp::*;
+use blockchyp;
 use std::error::Error;
 
 fn update_survey_question_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
-    let creds = APICredentials {
+    let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
         bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
         signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
     };
 
     // instantiate the client
-    let client = Client::new(creds);
+    let client = blockchyp::Client::new(creds);
 
-    let request = SurveyQuestion{
+    let request = blockchyp::SurveyQuestion{
         id: "<QUESTION ID>".to_string(),
         ordinal: 1,
         question_text: "Would you shop here again?".to_string(),

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_simple_locate() {
@@ -13,7 +13,7 @@ fn test_simple_locate() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = LocateRequest{
+    let request = blockchyp::LocateRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         ..Default::default()

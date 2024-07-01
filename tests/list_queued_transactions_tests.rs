@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_list_queued_transactions() {
@@ -15,7 +15,7 @@ fn test_list_queued_transactions() {
     test_utils::process_test_delay(&config, "ListQueuedTransactions");
 
     // setup request object
-    let mut setup_request = AuthorizationRequest{
+    let mut setup_request = blockchyp::AuthorizationRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         transaction_ref: test_utils::random_id().to_string(),
         description: "1060 West Addison".to_string(),
@@ -33,7 +33,7 @@ fn test_list_queued_transactions() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let mut request = ListQueuedTransactionsRequest{
+    let mut request = blockchyp::ListQueuedTransactionsRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         ..Default::default()
     };

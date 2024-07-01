@@ -41,9 +41,14 @@ clean:
 	$(CARGO) clean
 
 # Builds the package
-.PHONY: build
-build:
+.PHONY: build-dev
+build-dev:
 	$(CARGO) build
+
+# Builds the package with the --release profile to prepare for publishing
+.PHONY: build
+build: 
+	$(CARGO) build --release
 
 # Runs unit tests
 .PHONY: test
@@ -56,7 +61,7 @@ lint:
 
 # Publish the package
 .PHONY: publish
-publish: 
+publish:
 	$(CARGO) publish
 
 # Test publishing the package
@@ -71,7 +76,7 @@ stage:
 
 # Runs integration tests
 .PHONY: integration
-integration: clean
+integration:
 	$(if $(LOCALBUILD), \
 		$(CARGO) build && $(CARGO) test $(if $(TEST),--test (TEST),--no-fail-fast), \
 		$(foreach path,$(CACHEPATHS),mkdir -p $(CACHE)/$(path) ; ) \

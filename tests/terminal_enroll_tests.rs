@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_terminal_enroll() {
@@ -15,7 +15,7 @@ fn test_terminal_enroll() {
     test_utils::process_test_delay(&config, "TerminalEnroll");
 
     // request object
-    let mut request = EnrollRequest{
+    let mut request = blockchyp::EnrollRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         test: true,
         ..Default::default()

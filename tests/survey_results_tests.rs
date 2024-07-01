@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_survey_results() {
@@ -13,7 +13,7 @@ fn test_survey_results() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = SurveyQuestionRequest{
+    let setup_request = blockchyp::SurveyQuestionRequest{
 
         ..Default::default()
     };
@@ -26,7 +26,7 @@ fn test_survey_results() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = SurveyResultsRequest{
+    let request = blockchyp::SurveyResultsRequest{
         question_id: setup_response.results.as_ref().unwrap_or_else(|| panic!("Expected Some(vec) but got None"))[0].id.to_string(),
         ..Default::default()
     };

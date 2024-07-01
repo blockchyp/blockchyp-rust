@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_invite_merchant_user() {
@@ -13,7 +13,7 @@ fn test_invite_merchant_user() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = InviteMerchantUserRequest{
+    let request = blockchyp::InviteMerchantUserRequest{
         email: "doublea@blockchypteam.m8r.co".to_string(),
         first_name: "Aaron".to_string(),
         last_name: "Anderson".to_string(),

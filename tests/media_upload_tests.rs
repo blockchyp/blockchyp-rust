@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 use std::fs::File;
 #[test]
 fn test_media_upload() {
@@ -13,7 +13,7 @@ fn test_media_upload() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = UploadMetadata{
+    let request = blockchyp::UploadMetadata{
         file_name: "aviato.png".to_string(),
         file_size: 18843,
         upload_id: test_utils::random_id().to_string(),

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_partial_refund() {
@@ -15,7 +15,7 @@ fn test_partial_refund() {
     test_utils::process_test_delay(&config, "PartialRefund");
 
     // setup request object
-    let mut setup_request = AuthorizationRequest{
+    let mut setup_request = blockchyp::AuthorizationRequest{
         pan: "4111111111111111".to_string(),
         exp_month: "12".to_string(),
         exp_year: "2025".to_string(),
@@ -33,7 +33,7 @@ fn test_partial_refund() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let mut request = RefundRequest{
+    let mut request = blockchyp::RefundRequest{
         transaction_id: setup_response.transaction_id.to_string(),
         amount: "5.00".to_string(),
         test: true,

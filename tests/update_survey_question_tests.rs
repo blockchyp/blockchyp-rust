@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_update_survey_question() {
@@ -13,7 +13,7 @@ fn test_update_survey_question() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = SurveyQuestion{
+    let request = blockchyp::SurveyQuestion{
         ordinal: 1,
         question_text: "Would you shop here again?".to_string(),
         question_type: "yes_no".to_string(),

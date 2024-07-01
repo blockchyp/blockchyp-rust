@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_payment_link_status() {
@@ -13,16 +13,16 @@ fn test_payment_link_status() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = PaymentLinkRequest{
+    let setup_request = blockchyp::PaymentLinkRequest{
         amount: "199.99".to_string(),
         description: "Widget".to_string(),
         subject: "Widget invoice".to_string(),
-        transaction: Some(TransactionDisplayTransaction{
+        transaction: Some(blockchyp::TransactionDisplayTransaction{
             subtotal: "195.00".to_string(),
             tax: "4.99".to_string(),
             total: "199.99".to_string(),
             items: Some(vec![
-                TransactionDisplayItem{
+                blockchyp::TransactionDisplayItem{
                     description: "Widget".to_string(),
                     price: "195.00".to_string(),
                     quantity: 1.0,
@@ -33,7 +33,7 @@ fn test_payment_link_status() {
             ..Default::default()
         }),
         auto_send: true,
-        customer: Customer{
+        customer: blockchyp::Customer{
             customer_ref: "Customer reference string".to_string(),
             first_name: "FirstName".to_string(),
             last_name: "LastName".to_string(),
@@ -53,7 +53,7 @@ fn test_payment_link_status() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = PaymentLinkStatusRequest{
+    let request = blockchyp::PaymentLinkStatusRequest{
         link_code: setup_response.link_code.to_string(),
         ..Default::default()
     };

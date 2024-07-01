@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_gateway_timeout() {
@@ -15,7 +15,7 @@ fn test_gateway_timeout() {
     test_utils::process_test_delay(&config, "GatewayTimeout");
 
     // request object
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         timeout: 1,
         pan: "5555555555554444".to_string(),
         exp_month: "12".to_string(),

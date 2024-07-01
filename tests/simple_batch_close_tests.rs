@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_simple_batch_close() {
@@ -13,7 +13,7 @@ fn test_simple_batch_close() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let mut setup_request = AuthorizationRequest{
+    let mut setup_request = blockchyp::AuthorizationRequest{
         pan: "4111111111111111".to_string(),
         exp_month: "12".to_string(),
         exp_year: "2025".to_string(),
@@ -31,7 +31,7 @@ fn test_simple_batch_close() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = CloseBatchRequest{
+    let request = blockchyp::CloseBatchRequest{
         test: true,
         ..Default::default()
     };

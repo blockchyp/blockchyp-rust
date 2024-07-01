@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_tc_template_update() {
@@ -13,7 +13,7 @@ fn test_tc_template_update() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = TermsAndConditionsTemplate{
+    let request = blockchyp::TermsAndConditionsTemplate{
         alias: test_utils::random_id().to_string(),
         name: "HIPPA Disclosure".to_string(),
         content: "Lorem ipsum dolor sit amet.".to_string(),

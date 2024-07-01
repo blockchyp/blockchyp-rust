@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_update_merchant() {
@@ -13,11 +13,11 @@ fn test_update_merchant() {
     let client = config.new_test_client(Some("partner"));
 
     // request object
-    let request = MerchantProfile{
+    let request = blockchyp::MerchantProfile{
         test: true,
         dba_name: "Test Merchant".to_string(),
         company_name: "Test Merchant".to_string(),
-        billing_address: Address{
+        billing_address: blockchyp::Address{
             address_1: "1060 West Addison".to_string(),
             city: "Chicago".to_string(),
             state_or_province: "IL".to_string(),

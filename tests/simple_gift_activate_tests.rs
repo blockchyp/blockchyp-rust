@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_simple_gift_activate() {
@@ -15,7 +15,7 @@ fn test_simple_gift_activate() {
     test_utils::process_test_delay(&config, "SimpleGiftActivate");
 
     // request object
-    let mut request = GiftActivateRequest{
+    let mut request = blockchyp::GiftActivateRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         amount: "50.00".to_string(),

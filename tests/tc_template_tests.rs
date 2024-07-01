@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_tc_template() {
@@ -13,7 +13,7 @@ fn test_tc_template() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = TermsAndConditionsTemplate{
+    let setup_request = blockchyp::TermsAndConditionsTemplate{
         alias: test_utils::random_id().to_string(),
         name: "HIPPA Disclosure".to_string(),
         content: "Lorem ipsum dolor sit amet.".to_string(),
@@ -28,7 +28,7 @@ fn test_tc_template() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = TermsAndConditionsTemplateRequest{
+    let request = blockchyp::TermsAndConditionsTemplateRequest{
         template_id: setup_response.id.to_string(),
         ..Default::default()
     };

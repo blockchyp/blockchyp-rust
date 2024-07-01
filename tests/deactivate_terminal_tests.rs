@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_deactivate_terminal() {
@@ -13,7 +13,7 @@ fn test_deactivate_terminal() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = TerminalDeactivationRequest{
+    let request = blockchyp::TerminalDeactivationRequest{
         terminal_id: test_utils::random_id().to_string(),
         ..Default::default()
     };

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_terminal_ebt_charge() {
@@ -15,11 +15,11 @@ fn test_terminal_ebt_charge() {
     test_utils::process_test_delay(&config, "TerminalEBTCharge");
 
     // request object
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         amount: "25.00".to_string(),
         test: true,
-        card_type: CardType::EBT,
+        card_type: blockchyp::CardType::EBT,
         ..Default::default()
     };
     println!("Request: {:?}", request);

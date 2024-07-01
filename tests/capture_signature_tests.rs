@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_capture_signature() {
@@ -15,9 +15,9 @@ fn test_capture_signature() {
     test_utils::process_test_delay(&config, "CaptureSignature");
 
     // request object
-    let mut request = CaptureSignatureRequest{
+    let mut request = blockchyp::CaptureSignatureRequest{
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
-        sig_format: SignatureFormat::PNG,
+        sig_format: blockchyp::SignatureFormat::PNG,
         sig_width: 200,
         ..Default::default()
     };

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_terminal_ebt_balance() {
@@ -15,10 +15,10 @@ fn test_terminal_ebt_balance() {
     test_utils::process_test_delay(&config, "TerminalEBTBalance");
 
     // request object
-    let mut request = BalanceRequest{
+    let mut request = blockchyp::BalanceRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
-        card_type: CardType::EBT,
+        card_type: blockchyp::CardType::EBT,
         ..Default::default()
     };
     println!("Request: {:?}", request);

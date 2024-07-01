@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_activate_terminal() {
@@ -13,7 +13,7 @@ fn test_activate_terminal() {
     let client = config.new_test_client(Some(""));
 
     // request object
-    let request = TerminalActivationRequest{
+    let request = blockchyp::TerminalActivationRequest{
         terminal_name: "Bad Terminal Code".to_string(),
         activation_code: "XXXXXX".to_string(),
         ..Default::default()

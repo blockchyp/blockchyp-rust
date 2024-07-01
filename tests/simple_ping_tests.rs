@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_simple_ping() {
@@ -15,7 +15,7 @@ fn test_simple_ping() {
     test_utils::process_test_delay(&config, "SimplePing");
 
     // request object
-    let mut request = PingRequest{
+    let mut request = blockchyp::PingRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
         ..Default::default()

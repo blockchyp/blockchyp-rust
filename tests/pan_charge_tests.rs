@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_pan_charge() {
@@ -15,7 +15,7 @@ fn test_pan_charge() {
     test_utils::process_test_delay(&config, "PANCharge");
 
     // request object
-    let mut request = AuthorizationRequest{
+    let mut request = blockchyp::AuthorizationRequest{
         pan: "4111111111111111".to_string(),
         exp_month: "12".to_string(),
         exp_year: "2025".to_string(),

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_tc_entry() {
@@ -13,7 +13,7 @@ fn test_tc_entry() {
     let client = config.new_test_client(Some(""));
 
     // setup request object
-    let setup_request = TermsAndConditionsLogRequest{
+    let setup_request = blockchyp::TermsAndConditionsLogRequest{
 
         ..Default::default()
     };
@@ -26,7 +26,7 @@ fn test_tc_entry() {
     println!("Setup Response: {:?}", setup_response);
 
     // request object
-    let request = TermsAndConditionsLogRequest{
+    let request = blockchyp::TermsAndConditionsLogRequest{
         log_entry_id: setup_response.results.as_ref().unwrap_or_else(|| panic!("Expected Some(vec) but got None"))[0].id.to_string(),
         ..Default::default()
     };

@@ -5,7 +5,7 @@
 // Changes to this file will be lost every time the code is regenerated.
 
 mod test_utils;
-use ::blockchyp::*;
+use blockchyp;
 
 #[test]
 fn test_new_transaction_display() {
@@ -15,21 +15,21 @@ fn test_new_transaction_display() {
     test_utils::process_test_delay(&config, "NewTransactionDisplay");
 
     // request object
-    let mut request = TransactionDisplayRequest{
+    let mut request = blockchyp::TransactionDisplayRequest{
         test: true,
         terminal_name: config.default_terminal_name.clone().unwrap_or_else(|| "Test Terminal".to_string()).to_string(),
-        transaction: Some(TransactionDisplayTransaction{
+        transaction: Some(blockchyp::TransactionDisplayTransaction{
             subtotal: "35.00".to_string(),
             tax: "5.00".to_string(),
             total: "70.00".to_string(),
             items: Some(vec![
-                TransactionDisplayItem{
+                blockchyp::TransactionDisplayItem{
                     description: "Leki Trekking Poles".to_string(),
                     price: "35.00".to_string(),
                     quantity: 2.0,
                     extended: "70.00".to_string(),
                     discounts: Some(vec![
-                        TransactionDisplayDiscount{
+                        blockchyp::TransactionDisplayDiscount{
                             description: "memberDiscount".to_string(),
                             amount: "10.00".to_string(),
                             ..Default::default()
