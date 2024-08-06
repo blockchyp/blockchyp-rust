@@ -1,0 +1,82 @@
+name: blockchyp-rust
+on:
+  push:
+    branches:
+      - "develop"
+      - "master"
+      - "preview"
+    tags:
+      - "*"
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: rustup update stable && rustup default stable
+      - name: Run Tests
+        run: make test
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
+  test-build:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success')}}
+    needs: [ test ]
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: rustup update stable && rustup default stable
+      - name: Run Build
+        run: make build
+      - name: Dry Run Publish to Cargo
+        run: make dry-run-publish
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'success') && startsWith(github.ref_name, 'v') }}
+    needs: [ test ]
+    steps:
+      - uses: act10ns/slack@v1
+        with:
+          status: starting
+          channel: '#gitactivity'
+        if: always()
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - run: rustup update stable && rustup default stable
+      - name: Run Build
+        run: make build
+      - name: Publish to Cargo
+        run: make publish
+      - uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          channel: '#gitactivity'
+        if: always()
