@@ -1,7 +1,7 @@
 use blockchyp;
 use std::error::Error;
 
-fn update_merchant_platforms_example() -> Result<(), Box<dyn Error>> {
+fn add_gateway_merchant_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
     let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
@@ -12,11 +12,15 @@ fn update_merchant_platforms_example() -> Result<(), Box<dyn Error>> {
     // instantiate the client
     let client = blockchyp::Client::new(creds);
 
-    let request = blockchyp::MerchantPlatform{
-
+    let request = blockchyp::AddGatewayMerchantRequest{
+        profile: blockchyp::MerchantProfile{
+            dba_name: "DBA Name".to_string(),
+            company_name: "Corporate Entity Name".to_string(),
+            ..Default::default()
+        },
         ..Default::default()
     };
-    let (response, err) = client.update_merchant_platforms(&request);
+    let (response, err) = client.add_gateway_merchant(&request);
 
     if let Some(e) = err {
         eprintln!("Unexpected error occurred: {:?}", e);
@@ -32,7 +36,7 @@ fn update_merchant_platforms_example() -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    update_merchant_platforms_example()?;
+    add_gateway_merchant_example()?;
     println!("Example completed successfully!");
     Ok(())
 }
