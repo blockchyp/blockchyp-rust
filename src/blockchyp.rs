@@ -2060,6 +2060,28 @@ impl Client {
 
         (response, err)
 	}
+    /// Adds a live gateway merchant account.
+	pub fn add_gateway_merchant(&self, request: &AddGatewayMerchantRequest) -> (MerchantProfileResponse, Option<Box<dyn Error>>) {
+		let mut response = MerchantProfileResponse::default();
+		let response_err = self.dashboard_request("/api/add-gateway-merchant", "POST", request, &mut response, Some(request.timeout));
+
+		let err = if let Err(e) = response_err {
+            if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {
+                if reqwest_err.is_timeout() {
+                    response.response_description = RESPONSE_TIMED_OUT.to_string();
+                } else {
+                    response.response_description = e.to_string();
+                }
+            } else {
+                response.response_description = e.to_string();
+            }
+            Some(e)
+        } else {
+            None
+        };
+
+        (response, err)
+	}
     /// Adds a test merchant account.
 	pub fn add_test_merchant(&self, request: &AddTestMerchantRequest) -> (MerchantProfileResponse, Option<Box<dyn Error>>) {
 		let mut response = MerchantProfileResponse::default();

@@ -4194,6 +4194,21 @@ pub struct AddTestMerchantRequest {
 
 }
 
+/// Models basic information needed to create a gateway merchant.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct AddGatewayMerchantRequest {
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// The merchant profile to be boarded.
+    #[serde(rename = "profile")]
+    pub profile: MerchantProfile,
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+
+}
+
 /// Models a request for information about the merchant profile.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct MerchantProfileRequest {
@@ -4390,6 +4405,9 @@ pub struct MerchantProfile {
     /// The merchant id.
     #[serde(rename = "merchantId")]
     pub merchant_id: String,
+    /// The primary bank mid.
+    #[serde(rename = "bankMid")]
+    pub bank_mid: String,
     /// The merchant's company name.
     #[serde(rename = "companyName")]
     pub company_name: String,
@@ -4562,6 +4580,9 @@ pub struct MerchantProfileResponse {
     /// The merchant id.
     #[serde(rename = "merchantId")]
     pub merchant_id: String,
+    /// The primary bank mid.
+    #[serde(rename = "bankMid")]
+    pub bank_mid: String,
     /// The merchant's company name.
     #[serde(rename = "companyName")]
     pub company_name: String,
@@ -5254,6 +5275,39 @@ pub struct MerchantPlatformsResponse {
     /// Enumerates merchant platform settings.
     #[serde(rename = "results")]
     pub results: Option<Vec<MerchantPlatform>>,
+
+}
+
+/// Used to up platform configuration for gateway merchants.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct UpdateMerchantPlatformRequest {
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// The merchant platform configuration.
+    #[serde(rename = "platform")]
+    pub platform: MerchantPlatform,
+
+}
+
+/// Echoes back the state of the current platform configuration after a change.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct UpdateMerchantPlatformResponse {
+    /// Whether or not the request succeeded.
+    #[serde(rename = "success")]
+    pub success: bool,
+    /// The error, if an error occurred.
+    #[serde(rename = "error")]
+    pub error: String,
+    /// A narrative description of the transaction result.
+    #[serde(rename = "responseDescription")]
+    pub response_description: String,
+    /// The current platform configuration.
+    #[serde(rename = "platform")]
+    pub platform: MerchantPlatform,
 
 }
 
@@ -7115,6 +7169,9 @@ pub struct MerchantCredentialGenerationRequest {
     /// Free form description of the purpose or intent behind the credentials.
     #[serde(rename = "notes")]
     pub notes: String,
+    /// Type of credentials to generate, either API or TOKENIZING. Defaults to API.
+    #[serde(rename = "credentialType")]
+    pub credential_type: String,
 
 }
 
@@ -7139,6 +7196,9 @@ pub struct MerchantCredentialGenerationResponse {
     /// The merchant signing key.
     #[serde(rename = "signingKey")]
     pub signing_key: String,
+    /// The tokenizing key.
+    #[serde(rename = "tokenizingKey")]
+    pub tokenizing_key: String,
 
 }
 
