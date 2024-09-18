@@ -1971,6 +1971,28 @@ impl Client {
 
         (response, err)
 	}
+    /// Submits and application to add a new merchant account.
+	pub fn submit_application(&self, request: &SubmitApplicationRequest) -> (Acknowledgement, Option<Box<dyn Error>>) {
+		let mut response = Acknowledgement::default();
+		let response_err = self.dashboard_request("/api/submit-application", "POST", request, &mut response, Some(request.timeout));
+
+		let err = if let Err(e) = response_err {
+            if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {
+                if reqwest_err.is_timeout() {
+                    response.response_description = RESPONSE_TIMED_OUT.to_string();
+                } else {
+                    response.response_description = e.to_string();
+                }
+            } else {
+                response.response_description = e.to_string();
+            }
+            Some(e)
+        } else {
+            None
+        };
+
+        (response, err)
+	}
     /// Adds a test merchant account.
 	pub fn get_merchants(&self, request: &GetMerchantsRequest) -> (GetMerchantsResponse, Option<Box<dyn Error>>) {
 		let mut response = GetMerchantsResponse::default();

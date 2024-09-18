@@ -7289,6 +7289,387 @@ pub struct AggregateBillingLineItemStats {
 
 }
 
+/// Models an individual with 25% or more ownership interest in a company.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct Owner {
+    /// The first name of the owner.
+    #[serde(rename = "firstName")]
+    pub first_name: String,
+    /// The last name of the owner.
+    #[serde(rename = "lastName")]
+    pub last_name: String,
+    /// The job title of the owner.
+    #[serde(rename = "jobTitle")]
+    pub job_title: String,
+    /// The tax identification number (SSN) of the owner.
+    #[serde(rename = "taxIdNumber")]
+    pub tax_id_number: String,
+    /// The phone number of the owner.
+    #[serde(rename = "phoneNumber")]
+    pub phone_number: String,
+    /// The date of birth of the owner in mm/dd/yyyy format.
+    #[serde(rename = "dob")]
+    pub dob: String,
+    /// The percentage of ownership.
+    #[serde(rename = "ownership")]
+    pub ownership: String,
+    /// The address of the owner.
+    #[serde(rename = "address")]
+    pub address: Address,
+    /// The email address of the owner.
+    #[serde(rename = "email")]
+    pub email: String,
+    /// A single line representation of the owner's address.
+    #[serde(rename = "singleLineAddress")]
+    pub single_line_address: String,
+    /// The type of entity this owner represents.
+    #[serde(rename = "entityType")]
+    pub entity_type: String,
+    /// The driver's license number of the owner.
+    #[serde(rename = "dlNumber")]
+    pub dl_number: String,
+    /// The state that issued the owner's driver's license.
+    #[serde(rename = "dlStateOrProvince")]
+    pub dl_state_or_province: String,
+    /// The expiration date of the owner's driver's license.
+    #[serde(rename = "dlExpiration")]
+    pub dl_expiration: String,
+
+}
+
+/// Models a bank account associated with an application.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct ApplicationAccount {
+    /// The name of the bank account.
+    #[serde(rename = "name")]
+    pub name: String,
+    /// The name of the bank.
+    #[serde(rename = "bank")]
+    pub bank: String,
+    /// The name of the account holder.
+    #[serde(rename = "accountHolderName")]
+    pub account_holder_name: String,
+    /// The routing number of the bank.
+    #[serde(rename = "routingNumber")]
+    pub routing_number: String,
+    /// The account number.
+    #[serde(rename = "accountNumber")]
+    pub account_number: String,
+
+}
+
+/// Models a merchant application form to add a merchant account.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct MerchantApplication {
+    /// The invite code for the merchant.
+    #[serde(rename = "inviteCode")]
+    pub invite_code: String,
+    /// The business name your customers know you by (DBA Name).
+    #[serde(rename = "dbaName")]
+    pub dba_name: String,
+    /// The name of the legal entity you file your taxes under.
+    #[serde(rename = "corporateName")]
+    pub corporate_name: String,
+    /// The business website.
+    #[serde(rename = "webSite")]
+    pub web_site: String,
+    /// The business tax identification number (EIN).
+    #[serde(rename = "taxIdNumber")]
+    pub tax_id_number: String,
+    /// The type of business entity.
+    #[serde(rename = "entityType")]
+    pub entity_type: String,
+    /// The state where the business is incorporated.
+    #[serde(rename = "stateOfIncorporation")]
+    pub state_of_incorporation: String,
+    /// The primary type of business (e.g., Retail, Service, etc.).
+    #[serde(rename = "merchantType")]
+    pub merchant_type: String,
+    /// A short description of the products and services sold.
+    #[serde(rename = "businessDescription")]
+    pub business_description: String,
+    /// The number of years the business has been operating.
+    #[serde(rename = "yearsInBusiness")]
+    pub years_in_business: String,
+    /// The business telephone number.
+    #[serde(rename = "businessPhoneNumber")]
+    pub business_phone_number: String,
+    /// The physical address of the business.
+    #[serde(rename = "physicalAddress")]
+    pub physical_address: Address,
+    /// The mailing address of the business.
+    #[serde(rename = "mailingAddress")]
+    pub mailing_address: Address,
+    /// The first name of the primary contact.
+    #[serde(rename = "contactFirstName")]
+    pub contact_first_name: String,
+    /// The last name of the primary contact.
+    #[serde(rename = "contactLastName")]
+    pub contact_last_name: String,
+    /// The phone number of the primary contact.
+    #[serde(rename = "contactPhoneNumber")]
+    pub contact_phone_number: String,
+    /// The email address of the primary contact.
+    #[serde(rename = "contactEmail")]
+    pub contact_email: String,
+    /// The job title of the primary contact.
+    #[serde(rename = "contactTitle")]
+    pub contact_title: String,
+    /// The tax identification number (SSN) of the primary contact.
+    #[serde(rename = "contactTaxIdNumber")]
+    pub contact_tax_id_number: String,
+    /// The date of birth of the primary contact.
+    #[serde(rename = "contactDOB")]
+    pub contact_dob: String,
+    /// The driver's license number of the primary contact.
+    #[serde(rename = "contactDlNumber")]
+    pub contact_dl_number: String,
+    /// The state that issued the primary contact's driver's license.
+    #[serde(rename = "contactDlStateOrProvince")]
+    pub contact_dl_state_or_province: String,
+    /// The expiration date of the primary contact's driver's license.
+    #[serde(rename = "contactDlExpiration")]
+    pub contact_dl_expiration: String,
+    /// The home address of the primary contact.
+    #[serde(rename = "contactHomeAddress")]
+    pub contact_home_address: Address,
+    /// The role of the primary contact in the business.
+    #[serde(rename = "contactRole")]
+    pub contact_role: String,
+    /// List of individuals with 25% or more ownership in the company.
+    #[serde(rename = "owners")]
+    pub owners: Option<Vec<Owner>>,
+    /// The bank account information for the business.
+    #[serde(rename = "manualAccount")]
+    pub manual_account: ApplicationAccount,
+    /// The average transaction amount.
+    #[serde(rename = "averageTransaction")]
+    pub average_transaction: String,
+    /// The highest expected transaction amount.
+    #[serde(rename = "highTransaction")]
+    pub high_transaction: String,
+    /// The average monthly transaction volume.
+    #[serde(rename = "averageMonth")]
+    pub average_month: String,
+    /// The highest expected monthly transaction volume.
+    #[serde(rename = "highMonth")]
+    pub high_month: String,
+    /// The refund policy of the business.
+    #[serde(rename = "refundPolicy")]
+    pub refund_policy: String,
+    /// The number of days after purchase that refunds can be issued.
+    #[serde(rename = "refundDays")]
+    pub refund_days: String,
+    /// The time zone of the business.
+    #[serde(rename = "timeZone")]
+    pub time_zone: String,
+    /// The time when the daily batch should close.
+    #[serde(rename = "batchCloseTime")]
+    pub batch_close_time: String,
+    /// Indicates if the business has multiple locations.
+    #[serde(rename = "multipleLocations")]
+    pub multiple_locations: String,
+    /// The name of this specific business location.
+    #[serde(rename = "locationName")]
+    pub location_name: String,
+    /// The store number for this location.
+    #[serde(rename = "storeNumber")]
+    pub store_number: String,
+    /// Indicates if the business wants to accept EBT cards.
+    #[serde(rename = "ebtRequested")]
+    pub ebt_requested: String,
+    /// The FNS number issued by the USDA for EBT processing.
+    #[serde(rename = "fnsNumber")]
+    pub fns_number: String,
+    /// Indicates if the business plans to accept payments through a website.
+    #[serde(rename = "ecommerce")]
+    pub ecommerce: String,
+    /// Indicates if suppliers ship products directly to customers.
+    #[serde(rename = "dropShipping")]
+    pub drop_shipping: bool,
+    /// The percentage of transactions that will be chip or swipe.
+    #[serde(rename = "cardPresentPercentage")]
+    pub card_present_percentage: String,
+    /// The percentage of transactions that will be phone orders.
+    #[serde(rename = "phoneOrderPercentage")]
+    pub phone_order_percentage: String,
+    /// The percentage of transactions that will be e-commerce.
+    #[serde(rename = "ecomPercentage")]
+    pub ecom_percentage: String,
+    /// The number of days before shipment that customers are charged.
+    #[serde(rename = "billBeforeShipmentDays")]
+    pub bill_before_shipment_days: String,
+    /// Indicates if the business plans to process recurring payments.
+    #[serde(rename = "subscriptionsSupported")]
+    pub subscriptions_supported: String,
+    /// The frequency of recurring payments (if applicable).
+    #[serde(rename = "subscriptionFrequency")]
+    pub subscription_frequency: String,
+    /// The full legal name of the person signing the application.
+    #[serde(rename = "signerName")]
+    pub signer_name: String,
+
+}
+
+/// Models a merchant application submission request to add a new merchant account.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct SubmitApplicationRequest {
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// The invite code for the merchant.
+    #[serde(rename = "inviteCode")]
+    pub invite_code: String,
+    /// The business name your customers know you by (DBA Name).
+    #[serde(rename = "dbaName")]
+    pub dba_name: String,
+    /// The name of the legal entity you file your taxes under.
+    #[serde(rename = "corporateName")]
+    pub corporate_name: String,
+    /// The business website.
+    #[serde(rename = "webSite")]
+    pub web_site: String,
+    /// The business tax identification number (EIN).
+    #[serde(rename = "taxIdNumber")]
+    pub tax_id_number: String,
+    /// The type of business entity.
+    #[serde(rename = "entityType")]
+    pub entity_type: String,
+    /// The state where the business is incorporated.
+    #[serde(rename = "stateOfIncorporation")]
+    pub state_of_incorporation: String,
+    /// The primary type of business (e.g., Retail, Service, etc.).
+    #[serde(rename = "merchantType")]
+    pub merchant_type: String,
+    /// A short description of the products and services sold.
+    #[serde(rename = "businessDescription")]
+    pub business_description: String,
+    /// The number of years the business has been operating.
+    #[serde(rename = "yearsInBusiness")]
+    pub years_in_business: String,
+    /// The business telephone number.
+    #[serde(rename = "businessPhoneNumber")]
+    pub business_phone_number: String,
+    /// The physical address of the business.
+    #[serde(rename = "physicalAddress")]
+    pub physical_address: Address,
+    /// The mailing address of the business.
+    #[serde(rename = "mailingAddress")]
+    pub mailing_address: Address,
+    /// The first name of the primary contact.
+    #[serde(rename = "contactFirstName")]
+    pub contact_first_name: String,
+    /// The last name of the primary contact.
+    #[serde(rename = "contactLastName")]
+    pub contact_last_name: String,
+    /// The phone number of the primary contact.
+    #[serde(rename = "contactPhoneNumber")]
+    pub contact_phone_number: String,
+    /// The email address of the primary contact.
+    #[serde(rename = "contactEmail")]
+    pub contact_email: String,
+    /// The job title of the primary contact.
+    #[serde(rename = "contactTitle")]
+    pub contact_title: String,
+    /// The tax identification number (SSN) of the primary contact.
+    #[serde(rename = "contactTaxIdNumber")]
+    pub contact_tax_id_number: String,
+    /// The date of birth of the primary contact.
+    #[serde(rename = "contactDOB")]
+    pub contact_dob: String,
+    /// The driver's license number of the primary contact.
+    #[serde(rename = "contactDlNumber")]
+    pub contact_dl_number: String,
+    /// The state that issued the primary contact's driver's license.
+    #[serde(rename = "contactDlStateOrProvince")]
+    pub contact_dl_state_or_province: String,
+    /// The expiration date of the primary contact's driver's license.
+    #[serde(rename = "contactDlExpiration")]
+    pub contact_dl_expiration: String,
+    /// The home address of the primary contact.
+    #[serde(rename = "contactHomeAddress")]
+    pub contact_home_address: Address,
+    /// The role of the primary contact in the business.
+    #[serde(rename = "contactRole")]
+    pub contact_role: String,
+    /// List of individuals with 25% or more ownership in the company.
+    #[serde(rename = "owners")]
+    pub owners: Option<Vec<Owner>>,
+    /// The bank account information for the business.
+    #[serde(rename = "manualAccount")]
+    pub manual_account: ApplicationAccount,
+    /// The average transaction amount.
+    #[serde(rename = "averageTransaction")]
+    pub average_transaction: String,
+    /// The highest expected transaction amount.
+    #[serde(rename = "highTransaction")]
+    pub high_transaction: String,
+    /// The average monthly transaction volume.
+    #[serde(rename = "averageMonth")]
+    pub average_month: String,
+    /// The highest expected monthly transaction volume.
+    #[serde(rename = "highMonth")]
+    pub high_month: String,
+    /// The refund policy of the business.
+    #[serde(rename = "refundPolicy")]
+    pub refund_policy: String,
+    /// The number of days after purchase that refunds can be issued.
+    #[serde(rename = "refundDays")]
+    pub refund_days: String,
+    /// The time zone of the business.
+    #[serde(rename = "timeZone")]
+    pub time_zone: String,
+    /// The time when the daily batch should close.
+    #[serde(rename = "batchCloseTime")]
+    pub batch_close_time: String,
+    /// Indicates if the business has multiple locations.
+    #[serde(rename = "multipleLocations")]
+    pub multiple_locations: String,
+    /// The name of this specific business location.
+    #[serde(rename = "locationName")]
+    pub location_name: String,
+    /// The store number for this location.
+    #[serde(rename = "storeNumber")]
+    pub store_number: String,
+    /// Indicates if the business wants to accept EBT cards.
+    #[serde(rename = "ebtRequested")]
+    pub ebt_requested: String,
+    /// The FNS number issued by the USDA for EBT processing.
+    #[serde(rename = "fnsNumber")]
+    pub fns_number: String,
+    /// Indicates if the business plans to accept payments through a website.
+    #[serde(rename = "ecommerce")]
+    pub ecommerce: String,
+    /// Indicates if suppliers ship products directly to customers.
+    #[serde(rename = "dropShipping")]
+    pub drop_shipping: bool,
+    /// The percentage of transactions that will be chip or swipe.
+    #[serde(rename = "cardPresentPercentage")]
+    pub card_present_percentage: String,
+    /// The percentage of transactions that will be phone orders.
+    #[serde(rename = "phoneOrderPercentage")]
+    pub phone_order_percentage: String,
+    /// The percentage of transactions that will be e-commerce.
+    #[serde(rename = "ecomPercentage")]
+    pub ecom_percentage: String,
+    /// The number of days before shipment that customers are charged.
+    #[serde(rename = "billBeforeShipmentDays")]
+    pub bill_before_shipment_days: String,
+    /// Indicates if the business plans to process recurring payments.
+    #[serde(rename = "subscriptionsSupported")]
+    pub subscriptions_supported: String,
+    /// The frequency of recurring payments (if applicable).
+    #[serde(rename = "subscriptionFrequency")]
+    pub subscription_frequency: String,
+    /// The full legal name of the person signing the application.
+    #[serde(rename = "signerName")]
+    pub signer_name: String,
+
+}
+
 
 
 /// A request for customer signature data.

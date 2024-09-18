@@ -5843,7 +5843,7 @@ fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
     let client = blockchyp::Client::new(creds);
 
     let request = blockchyp::MerchantCredentialGenerationRequest{
-
+        merchant_id: "<MERCHANT ID>".to_string(),
         ..Default::default()
     };
     let (response, err) = client.merchant_credential_generation(&request);
@@ -5863,6 +5863,73 @@ fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     merchant_credential_generation_example()?;
+    println!("Example completed successfully!");
+    Ok(())
+}
+
+```
+
+#### Submit Application
+
+
+
+* **API Credential Types:** Partner
+* **Required Role:** INVITE MERCHANT
+
+This is a partner level API that can be used to submit applications to add new merchant accounts. The application requires a significant amount of detailed information about the merchant and their business. Rather than providing an exhaustive list of required fields, we recommend submitting as much information as possible in your initial request. 
+
+If any required fields are missing or if there are any validation errors, the API will return specific error messages indicating which fields need to be addressed. Simply review these validation errors, fill in the missing information or correct any errors, and resubmit the application.
+
+Key areas of information include:
+- Business details (name, type, tax information)
+- Contact information
+- Address information (physical and mailing)
+- Owner details
+- Bank account information
+- Transaction volume estimates
+- Operational settings (timezone, batch close time, etc.)
+
+**Note:** Some fields may be conditionally required based on the values of other fields. The validation process will guide you through ensuring all necessary information is provided.
+
+
+
+
+```rust
+use blockchyp;
+use std::error::Error;
+
+fn submit_application_example() -> Result<(), Box<dyn Error>> {
+    // sample credentials
+    let creds = blockchyp::APICredentials {
+        api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
+        bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
+        signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
+    };
+
+    // instantiate the client
+    let client = blockchyp::Client::new(creds);
+
+    let request = blockchyp::SubmitApplicationRequest{
+
+        ..Default::default()
+    };
+    let (response, err) = client.submit_application(&request);
+
+    if let Some(e) = err {
+        eprintln!("Unexpected error occurred: {:?}", e);
+        return Err(e)
+    }
+
+    if response.success {
+		println!("Success");
+	}
+
+    println!("Response: {:?}", response);
+    Ok(())
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    submit_application_example()?;
     println!("Example completed successfully!");
     Ok(())
 }
