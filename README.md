@@ -503,6 +503,80 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
 ```
 
+#### Card Metadata
+
+
+
+* **API Credential Types:** Merchant
+* **Required Role:** Payment API Access
+
+This API allows you to retrieve card metadata.
+
+Card metadata requests can use a payment terminal to retrieve metadata or
+use a previously enrolled payment token.
+
+**Terminal Transactions**
+
+For terminal transactions, make sure you pass in the terminal name using the `terminalName` property.
+
+**Token Transactions**
+
+If you have a payment token, omit the `terminalName` property and pass in the token with the `token`
+property instead.
+
+**Card Numbers and Mag Stripes**
+
+You can also pass in PANs and Mag Stripes, but you probably shouldn't, as this will
+put you in PCI scope and the most common vector for POS breaches is keylogging.
+If you use terminals for manual card entry, you'll bypass any keyloggers that
+might be maliciously running on the point-of-sale system.
+
+
+
+
+```rust
+use blockchyp;
+use std::error::Error;
+
+fn card_metadata_example() -> Result<(), Box<dyn Error>> {
+    // sample credentials
+    let creds = blockchyp::APICredentials {
+        api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
+        bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
+        signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
+    };
+
+    // instantiate the client
+    let client = blockchyp::Client::new(creds);
+
+    let mut request = blockchyp::CardMetadataRequest{
+        test: true,
+        terminal_name: "Test Terminal".to_string(),
+        ..Default::default()
+    };
+    let (response, err) = client.card_metadata(&mut request);
+
+    if let Some(e) = err {
+        eprintln!("Unexpected error occurred: {:?}", e);
+        return Err(e)
+    }
+
+    if response.success {
+		println!("success");
+	}
+
+    println!("Response: {:?}", response);
+    Ok(())
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    card_metadata_example()?;
+    println!("Example completed successfully!");
+    Ok(())
+}
+
+```
+
 #### Time Out Reversal
 
 

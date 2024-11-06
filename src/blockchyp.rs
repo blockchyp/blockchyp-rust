@@ -500,6 +500,63 @@ impl Client {
 		(response, err)
 	}
 
+    /// Retrieves card metadata.
+	pub fn card_metadata(&self, request: &mut CardMetadataRequest) -> (CardMetadataResponse, Option<Box<dyn Error>>) {
+		let mut response = CardMetadataResponse::default();
+		let response_err: Result<(), Box<dyn Error>>;
+
+		if let Err(e) = self.populate_signature_options(request) {
+            return (response, Some(e));
+        }
+
+		if !request.terminal_name.is_empty() {
+            match self.resolve_terminal_route(&request.terminal_name) {
+                Ok(route) => {
+                    if route.cloud_relay_enabled {
+                        response_err = self.relay_request("/api/card-metadata", "POST", &request, &mut response, request.test, Some(request.timeout));
+                    } else {
+                        let auth_request = TerminalCardMetadataRequest {
+                            api_credentials: route.transient_credentials.clone().unwrap_or_default(),
+                            request: request.clone(),
+                        };
+                        response_err = self.terminal_request(route, "/api/card-metadata", "POST", &auth_request, &mut response, Some(request.timeout));
+                    }
+                }
+                Err(e) => {
+                    if e.downcast_ref::<ErrUnknownTerminal>().is_some() {
+           	 		    response.response_description = RESPONSE_UNKNOWN_TERMINAL.to_string();
+           	 		    return (response, Some(e))
+           	 		} else {
+           	 		    return (response, Some(e))
+           	 		}
+                }
+            }
+        } else {
+			response_err = self.gateway_request("/api/card-metadata", "POST", request, &mut response, request.test, Some(request.timeout));
+		}
+
+		let err = if let Err(e) = response_err {
+            if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {
+                if reqwest_err.is_timeout() {
+                    response.response_description = RESPONSE_TIMED_OUT.to_string();
+                } else {
+                    response.response_description = e.to_string();
+                }
+            } else {
+                response.response_description = e.to_string();
+            }
+            Some(e)
+        } else {
+            None
+        };
+
+        if let Err(e) = self.handle_signature(&request, &mut response) {
+            return (response, Some(e));
+        }
+
+		(response, err)
+	}
+
     /// Activates or recharges a gift card.
 	pub fn gift_activate(&self, request: &mut GiftActivateRequest) -> (GiftActivateResponse, Option<Box<dyn Error>>) {
 		let mut response = GiftActivateResponse::default();
