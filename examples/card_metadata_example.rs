@@ -1,7 +1,7 @@
 use blockchyp;
 use std::error::Error;
 
-fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
+fn card_metadata_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
     let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
@@ -12,11 +12,12 @@ fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
     // instantiate the client
     let client = blockchyp::Client::new(creds);
 
-    let request = blockchyp::MerchantCredentialGenerationRequest{
-        merchant_id: "<MERCHANT ID>".to_string(),
+    let mut request = blockchyp::CardMetadataRequest{
+        test: true,
+        terminal_name: "Test Terminal".to_string(),
         ..Default::default()
     };
-    let (response, err) = client.merchant_credential_generation(&request);
+    let (response, err) = client.card_metadata(&mut request);
 
     if let Some(e) = err {
         eprintln!("Unexpected error occurred: {:?}", e);
@@ -24,7 +25,7 @@ fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
     }
 
     if response.success {
-		println!("Success");
+		println!("success");
 	}
 
     println!("Response: {:?}", response);
@@ -32,7 +33,7 @@ fn merchant_credential_generation_example() -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    merchant_credential_generation_example()?;
+    card_metadata_example()?;
     println!("Example completed successfully!");
     Ok(())
 }
