@@ -1,4 +1,4 @@
-// Copyright 2019-2024 BlockChyp, Inc. All rights reserved. Use of this code
+// Copyright 2019-2025 BlockChyp, Inc. All rights reserved. Use of this code
 // is governed by a license that can be found in the LICENSE file.
 //
 // This file was generated automatically by the BlockChyp SDK Generator.
@@ -4801,6 +4801,9 @@ pub struct MerchantProfile {
     /// Bank accounts for split bank account merchants.
     #[serde(rename = "bankAccounts")]
     pub bank_accounts: Option<Vec<BankAccount>>,
+    /// That a merchant is allowed to send a surcharge amount directly to the gateway.
+    #[serde(rename = "passthroughSurchargeEnabled")]
+    pub passthrough_surcharge_enabled: bool,
 
 }
 
@@ -4976,6 +4979,9 @@ pub struct MerchantProfileResponse {
     /// Bank accounts for split bank account merchants.
     #[serde(rename = "bankAccounts")]
     pub bank_accounts: Option<Vec<BankAccount>>,
+    /// That a merchant is allowed to send a surcharge amount directly to the gateway.
+    #[serde(rename = "passthroughSurchargeEnabled")]
+    pub passthrough_surcharge_enabled: bool,
 
 }
 
