@@ -1062,6 +1062,18 @@ pub struct CustomerToken {
     /// Payment type.
     #[serde(rename = "paymentType")]
     pub payment_type: String,
+    /// Bank account type (checking, saving).
+    #[serde(rename = "accountType")]
+    pub account_type: String,
+    /// Bank account holder type (personal, business).
+    #[serde(rename = "accountHolderType")]
+    pub account_holder_type: String,
+    /// Bank name.
+    #[serde(rename = "bankName")]
+    pub bank_name: String,
+    /// Routing number.
+    #[serde(rename = "routingNumber")]
+    pub routing_number: String,
     /// Models customer records associated with a payment token.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
@@ -2437,6 +2449,15 @@ pub struct EnrollRequest {
     /// That this transaction will include a card metadata lookup.
     #[serde(rename = "cardMetadataLookup", default)]
     pub card_metadata_lookup: bool,
+    /// The type of account (checking, savings, etc) for an ACH payment method.
+    #[serde(rename = "accountType", default)]
+    pub account_type: String,
+    /// The type of account holder (personal, business, etc) for an ACH payment method.
+    #[serde(rename = "accountHolderType", default)]
+    pub account_holder_type: String,
+    /// The bank name for an ACH payment method.
+    #[serde(rename = "bankName", default)]
+    pub bank_name: String,
 
 }
 
@@ -2546,6 +2567,15 @@ pub struct EnrollResponse {
     /// Details about a payment card derived from its BIN/IIN.
     #[serde(rename = "cardMetadata", default)]
     pub card_metadata: Option<CardMetadata>,
+    /// The type of account (checking, savings, etc) for an ACH payment method.
+    #[serde(rename = "accountType", default)]
+    pub account_type: String,
+    /// The type of account holder (personal, business, etc) for an ACH payment method.
+    #[serde(rename = "accountHolderType", default)]
+    pub account_holder_type: String,
+    /// The bank name for an ACH payment method.
+    #[serde(rename = "bankName", default)]
+    pub bank_name: String,
 
 }
 
