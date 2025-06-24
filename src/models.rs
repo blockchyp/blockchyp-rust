@@ -1074,6 +1074,12 @@ pub struct CustomerToken {
     /// Routing number.
     #[serde(rename = "routingNumber")]
     pub routing_number: String,
+    /// Token hash (generated with a static salt, Merchant ID, Registration Date and PAN.
+    #[serde(rename = "tokenHash")]
+    pub token_hash: String,
+    /// Card bin.
+    #[serde(rename = "bin")]
+    pub bin: String,
     /// Models customer records associated with a payment token.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
@@ -2576,6 +2582,12 @@ pub struct EnrollResponse {
     /// The bank name for an ACH payment method.
     #[serde(rename = "bankName", default)]
     pub bank_name: String,
+    /// The token hash (generated with a static salt, Merchant ID, Registration Date and PAN).
+    #[serde(rename = "tokenHash", default)]
+    pub token_hash: String,
+    /// The first 8 digits of the card aka the BIN.
+    #[serde(rename = "bin", default)]
+    pub bin: String,
 
 }
 
