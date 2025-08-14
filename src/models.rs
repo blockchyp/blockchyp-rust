@@ -1590,6 +1590,9 @@ pub struct CardMetadataResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -1790,6 +1793,9 @@ pub struct BalanceResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -2173,6 +2179,9 @@ pub struct CaptureResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -2323,6 +2332,9 @@ pub struct VoidResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -2558,6 +2570,9 @@ pub struct EnrollResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -3159,6 +3174,9 @@ pub struct AuthorizationResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -3460,6 +3478,9 @@ pub struct TransactionStatus {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse", default)]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
@@ -4846,6 +4867,22 @@ pub struct MerchantProfile {
     /// That a merchant is allowed to send a surcharge amount directly to the gateway.
     #[serde(rename = "passthroughSurchargeEnabled")]
     pub passthrough_surcharge_enabled: bool,
+    /// That CVV verification is enabled for manually entered transactions.
+    #[serde(rename = "cvvVerificationEnabled")]
+    pub cvv_verification_enabled: bool,
+    /// That CVV mismatch (N) responses should be declined.
+    #[serde(rename = "cvvVerificationNEnabled")]
+    pub cvv_verification_nenabled: bool,
+    /// That CVV not processed (P) responses should be declined.
+    #[serde(rename = "cvvVerificationPEnabled")]
+    pub cvv_verification_penabled: bool,
+    /// That CVV should be on card but is not indicated (S) responses should be declined.
+    #[serde(rename = "cvvVerificationSEnabled")]
+    pub cvv_verification_senabled: bool,
+    /// That issuer not certified or has not provided encryption key (U) responses should be
+/// declined.
+    #[serde(rename = "cvvVerificationUEnabled")]
+    pub cvv_verification_uenabled: bool,
 
 }
 
@@ -5024,6 +5061,22 @@ pub struct MerchantProfileResponse {
     /// That a merchant is allowed to send a surcharge amount directly to the gateway.
     #[serde(rename = "passthroughSurchargeEnabled")]
     pub passthrough_surcharge_enabled: bool,
+    /// That CVV verification is enabled for manually entered transactions.
+    #[serde(rename = "cvvVerificationEnabled")]
+    pub cvv_verification_enabled: bool,
+    /// That CVV mismatch (N) responses should be declined.
+    #[serde(rename = "cvvVerificationNEnabled")]
+    pub cvv_verification_nenabled: bool,
+    /// That CVV not processed (P) responses should be declined.
+    #[serde(rename = "cvvVerificationPEnabled")]
+    pub cvv_verification_penabled: bool,
+    /// That CVV should be on card but is not indicated (S) responses should be declined.
+    #[serde(rename = "cvvVerificationSEnabled")]
+    pub cvv_verification_senabled: bool,
+    /// That issuer not certified or has not provided encryption key (U) responses should be
+/// declined.
+    #[serde(rename = "cvvVerificationUEnabled")]
+    pub cvv_verification_uenabled: bool,
 
 }
 
@@ -8301,6 +8354,9 @@ pub struct PaymentMethodResponse {
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
+    /// The CVV verification result if CVV was submitted.
+    #[serde(rename = "cvvResponse")]
+    pub cvv_response: String,
     /// Suggested receipt fields.
     #[serde(rename = "receiptSuggestions")]
     pub receipt_suggestions: ReceiptSuggestions,
