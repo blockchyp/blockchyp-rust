@@ -4895,6 +4895,10 @@ pub struct MerchantProfile {
     /// That the merchant follows the partner's AVS settings.
     #[serde(rename = "followPartnerAvsSettings")]
     pub follow_partner_avs_settings: bool,
+    /// Flag indicating whether or not account updater is enrolled. Note that only merchant's
+/// whose partner is enrolled will be processed by the account updater.
+    #[serde(rename = "accountUpdaterEnrolled")]
+    pub account_updater_enrolled: bool,
 
 }
 
@@ -5101,6 +5105,10 @@ pub struct MerchantProfileResponse {
     /// That the merchant follows the partner's AVS settings.
     #[serde(rename = "followPartnerAvsSettings")]
     pub follow_partner_avs_settings: bool,
+    /// Flag indicating whether or not account updater is enrolled. Note that only merchant's
+/// whose partner is enrolled will be processed by the account updater.
+    #[serde(rename = "accountUpdaterEnrolled")]
+    pub account_updater_enrolled: bool,
 
 }
 
