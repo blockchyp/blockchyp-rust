@@ -4889,7 +4889,7 @@ pub struct MerchantProfile {
     /// The AVS (Address Verification Service) rule to apply. Allowed values are
 /// 'allow_all', 'require_full_match', 'require_zip_match',
 /// 'require_address_match'. If avsRule is empty, then merchant follows partner
-/// setting
+/// setting.
     #[serde(rename = "avsRule")]
     pub avs_rule: String,
     /// That the merchant follows the partner's AVS settings.
@@ -5099,7 +5099,7 @@ pub struct MerchantProfileResponse {
     /// The AVS (Address Verification Service) rule to apply. Allowed values are
 /// 'allow_all', 'require_full_match', 'require_zip_match',
 /// 'require_address_match'. If avsRule is empty, then merchant follows partner
-/// setting
+/// setting.
     #[serde(rename = "avsRule")]
     pub avs_rule: String,
     /// That the merchant follows the partner's AVS settings.
