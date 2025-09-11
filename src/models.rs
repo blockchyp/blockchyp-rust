@@ -4883,12 +4883,18 @@ pub struct MerchantProfile {
 /// declined.
     #[serde(rename = "cvvVerificationUEnabled")]
     pub cvv_verification_uenabled: bool,
+    /// That the merchant follows the partner's CVV settings.
+    #[serde(rename = "followPartnerCvvSettings")]
+    pub follow_partner_cvv_settings: bool,
     /// The AVS (Address Verification Service) rule to apply. Allowed values are
 /// 'allow_all', 'require_full_match', 'require_zip_match',
 /// 'require_address_match'. If avsRule is empty, then merchant follows partner
 /// setting
     #[serde(rename = "avsRule")]
     pub avs_rule: String,
+    /// That the merchant follows the partner's AVS settings.
+    #[serde(rename = "followPartnerAvsSettings")]
+    pub follow_partner_avs_settings: bool,
 
 }
 
@@ -5083,12 +5089,18 @@ pub struct MerchantProfileResponse {
 /// declined.
     #[serde(rename = "cvvVerificationUEnabled")]
     pub cvv_verification_uenabled: bool,
+    /// That the merchant follows the partner's CVV settings.
+    #[serde(rename = "followPartnerCvvSettings")]
+    pub follow_partner_cvv_settings: bool,
     /// The AVS (Address Verification Service) rule to apply. Allowed values are
 /// 'allow_all', 'require_full_match', 'require_zip_match',
 /// 'require_address_match'. If avsRule is empty, then merchant follows partner
 /// setting
     #[serde(rename = "avsRule")]
     pub avs_rule: String,
+    /// That the merchant follows the partner's AVS settings.
+    #[serde(rename = "followPartnerAvsSettings")]
+    pub follow_partner_avs_settings: bool,
 
 }
 
