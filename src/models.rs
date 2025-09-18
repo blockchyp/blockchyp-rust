@@ -4899,6 +4899,9 @@ pub struct MerchantProfile {
 /// whose partner is enrolled will be processed by the account updater.
     #[serde(rename = "accountUpdaterEnrolled")]
     pub account_updater_enrolled: bool,
+    /// Whether the merchant should bypass an auth with TSYS on Enrollment.
+    #[serde(rename = "bypassEnrollAuthEnabled")]
+    pub bypass_enroll_auth_enabled: bool,
 
 }
 
@@ -5109,6 +5112,9 @@ pub struct MerchantProfileResponse {
 /// whose partner is enrolled will be processed by the account updater.
     #[serde(rename = "accountUpdaterEnrolled")]
     pub account_updater_enrolled: bool,
+    /// Whether the merchant should bypass an auth with TSYS on Enrollment.
+    #[serde(rename = "bypassEnrollAuthEnabled")]
+    pub bypass_enroll_auth_enabled: bool,
 
 }
 
