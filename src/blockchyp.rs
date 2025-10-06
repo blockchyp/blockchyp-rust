@@ -1983,6 +1983,28 @@ impl Client {
 
 		(response, err)
 	}
+    /// Updates a payment token.
+	pub fn update_token(&self, request: &UpdateTokenRequest) -> (UpdateTokenResponse, Option<Box<dyn Error>>) {
+		let mut response = UpdateTokenResponse::default();
+		let response_err = self.gateway_request(&format!("/api/token/{}", request.token), "POST", request, &mut response, request.test, Some(request.timeout));
+
+		let err = if let Err(e) = response_err {
+            if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {
+                if reqwest_err.is_timeout() {
+                    response.response_description = RESPONSE_TIMED_OUT.to_string();
+                } else {
+                    response.response_description = e.to_string();
+                }
+            } else {
+                response.response_description = e.to_string();
+            }
+            Some(e)
+        } else {
+            None
+        };
+
+		(response, err)
+	}
     /// Deletes a payment token.
 	pub fn delete_token(&self, request: &DeleteTokenRequest) -> (DeleteTokenResponse, Option<Box<dyn Error>>) {
 		let mut response = DeleteTokenResponse::default();
