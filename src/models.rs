@@ -1044,6 +1044,63 @@ pub struct TokenMetadataResponse {
 
 }
 
+/// Updates a payment token.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct UpdateTokenRequest {
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// The token to update.
+    #[serde(rename = "token")]
+    pub token: String,
+    /// Bank account holder type (personal or business).
+    #[serde(rename = "accountHolderType")]
+    pub account_holder_type: String,
+    /// Bank account type (checking or saving).
+    #[serde(rename = "accountType")]
+    pub account_type: String,
+    /// Bank name.
+    #[serde(rename = "bankName")]
+    pub bank_name: String,
+    /// Card holder name.
+    #[serde(rename = "cardHolderName")]
+    pub card_holder_name: String,
+    /// Expiry month.
+    #[serde(rename = "expiryMonth")]
+    pub expiry_month: String,
+    /// Expiry year.
+    #[serde(rename = "expiryYear")]
+    pub expiry_year: String,
+    /// Address.
+    #[serde(rename = "address")]
+    pub address: String,
+    /// Postal code.
+    #[serde(rename = "postalCode")]
+    pub postal_code: String,
+
+}
+
+/// The response to a update token request.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct UpdateTokenResponse {
+    /// Whether or not the request succeeded.
+    #[serde(rename = "success")]
+    pub success: bool,
+    /// The error, if an error occurred.
+    #[serde(rename = "error")]
+    pub error: String,
+    /// A narrative description of the transaction result.
+    #[serde(rename = "responseDescription")]
+    pub response_description: String,
+    /// The updated token for a given query.
+    #[serde(rename = "token")]
+    pub token: CustomerToken,
+
+}
+
 /// Models a customer token.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct CustomerToken {
