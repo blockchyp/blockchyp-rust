@@ -14,8 +14,8 @@ fn update_token_example() -> Result<(), Box<dyn Error>> {
 
     let request = blockchyp::UpdateTokenRequest{
         token: "<TOKEN>".to_string(),
-        exp_month: 12,
-        exp_year: 2040,
+        expiry_month: "12".to_string(),
+        expiry_year: "2040".to_string(),
         ..Default::default()
     };
     let (response, err) = client.update_token(&request);

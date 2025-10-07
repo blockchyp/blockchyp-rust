@@ -35,8 +35,8 @@ fn test_update_token() {
     // request object
     let request = blockchyp::UpdateTokenRequest{
         token: setup_response.token.to_string(),
-        exp_month: 12,
-        exp_year: 2040,
+        expiry_month: "12".to_string(),
+        expiry_year: "2040".to_string(),
         ..Default::default()
     };
     println!("Request: {:?}", request);
