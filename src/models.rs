@@ -1444,6 +1444,15 @@ pub struct AuthorizationRequest {
     /// That this transaction will include a card metadata lookup.
     #[serde(rename = "cardMetadataLookup", default)]
     pub card_metadata_lookup: bool,
+    /// The shipping cost associated with the transaction
+    #[serde(rename = "shippingAmount", default)]
+    pub shipping_amount: String,
+    /// The processor ID associated with the transaction
+    #[serde(rename = "processorId", default)]
+    pub processor_id: String,
+    /// The external customer ID associated with the transaction
+    #[serde(rename = "externalCustomerId", default)]
+    pub external_customer_id: String,
 
 }
 
