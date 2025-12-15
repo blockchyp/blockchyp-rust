@@ -1137,6 +1137,18 @@ pub struct CustomerToken {
     /// Card bin.
     #[serde(rename = "bin")]
     pub bin: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
+    /// The card holder name.
+    #[serde(rename = "cardHolderName", default)]
+    pub card_holder_name: String,
     /// Models customer records associated with a payment token.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
@@ -1275,6 +1287,9 @@ pub struct AuthorizationRequest {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode", default)]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry", default)]
@@ -1576,6 +1591,9 @@ pub struct CardMetadataRequest {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode", default)]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry", default)]
@@ -1653,6 +1671,15 @@ pub struct CardMetadataResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -1752,6 +1779,9 @@ pub struct BalanceRequest {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode", default)]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry", default)]
@@ -1856,6 +1886,15 @@ pub struct BalanceResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -1955,6 +1994,9 @@ pub struct RefundRequest {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode", default)]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry", default)]
@@ -2242,6 +2284,15 @@ pub struct CaptureResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -2395,6 +2446,15 @@ pub struct VoidResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -2494,6 +2554,9 @@ pub struct EnrollRequest {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode", default)]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry", default)]
@@ -2633,6 +2696,15 @@ pub struct EnrollResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -3237,6 +3309,15 @@ pub struct AuthorizationResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -3541,6 +3622,15 @@ pub struct TransactionStatus {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear", default)]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode", default)]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address", default)]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country", default)]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -8455,6 +8545,15 @@ pub struct PaymentMethodResponse {
     /// The card expiration year in YY format.
     #[serde(rename = "expYear")]
     pub exp_year: String,
+    /// The card postal code.
+    #[serde(rename = "postalCode")]
+    pub postal_code: String,
+    /// The card address.
+    #[serde(rename = "address")]
+    pub address: String,
+    /// The card country.
+    #[serde(rename = "country")]
+    pub country: String,
     /// Address verification results if address information was submitted.
     #[serde(rename = "avsResponse")]
     pub avs_response: AVSResponse,
@@ -8594,6 +8693,9 @@ pub struct PaymentMethod {
     /// The cardholder postal code for use with address verification.
     #[serde(rename = "postalCode")]
     pub postal_code: String,
+    /// The cardholder country.
+    #[serde(rename = "country")]
+    pub country: String,
     /// That the payment entry method is a manual keyed transaction. If this is true, no other
 /// payment method will be accepted.
     #[serde(rename = "manualEntry")]
