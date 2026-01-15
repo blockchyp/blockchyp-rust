@@ -1,4 +1,4 @@
-// Copyright 2019-2025 BlockChyp, Inc. All rights reserved. Use of this code
+// Copyright 2019-2026 BlockChyp, Inc. All rights reserved. Use of this code
 // is governed by a license that can be found in the LICENSE file.
 //
 // This file was generated automatically by the BlockChyp SDK Generator.
@@ -4613,6 +4613,12 @@ pub struct BatchDetailsResponse {
     /// Merchant's batch history in descending order.
     #[serde(rename = "volumeByTerminal")]
     pub volume_by_terminal: Option<Vec<TerminalVolume>>,
+    /// The net volume for this batch, usually expected volume less daily fees volume.
+    #[serde(rename = "netDeposit")]
+    pub net_deposit: String,
+    /// The daily fees for this batch
+    #[serde(rename = "dailyFees")]
+    pub daily_fees: String,
 
 }
 
