@@ -1459,15 +1459,37 @@ pub struct AuthorizationRequest {
     /// That this transaction will include a card metadata lookup.
     #[serde(rename = "cardMetadataLookup", default)]
     pub card_metadata_lookup: bool,
-    /// The shipping cost associated with the transaction
+    /// The total discount amount for the transaction, and will overide additive logic for
+/// line item discounts.
+    #[serde(rename = "totalDiscountAmount", default)]
+    pub total_discount_amount: String,
+    /// The shipping cost associated with the transaction.
     #[serde(rename = "shippingAmount", default)]
     pub shipping_amount: String,
-    /// The processor ID associated with the transaction
+    /// The duty amount associated with the transaction.
+    #[serde(rename = "dutyAmount", default)]
+    pub duty_amount: String,
+    /// The processor ID associated with the transaction.
     #[serde(rename = "processorId", default)]
     pub processor_id: String,
-    /// The external customer ID associated with the transaction
+    /// The external customer ID associated with the transaction.
     #[serde(rename = "externalCustomerId", default)]
     pub external_customer_id: String,
+    /// Three character, numeric, ship-to country code. Defaults to '840' (USA) if not
+/// specified.
+    #[serde(rename = "destinationCountryCode", default)]
+    pub destination_country_code: String,
+    /// Nine character postal code for shipping origin addresses. For US addresses, this is a
+/// 5+4 ZIP or five digit ZIP.
+    #[serde(rename = "shipFromPostalCode", default)]
+    pub ship_from_postal_code: String,
+    /// Nine character postal code for shipping destination addresses. For US addresses,
+/// this is a 5+4 ZIP or five digit ZIP.
+    #[serde(rename = "shipToPostalCode", default)]
+    pub ship_to_postal_code: String,
+    /// The purchase order date.
+    #[serde(rename = "orderDate", default)]
+    pub order_date: Option<DateTime<Utc>>,
 
 }
 
@@ -3702,6 +3724,16 @@ pub struct TransactionDisplayItem {
     /// Are displayed under their corresponding item.
     #[serde(rename = "discounts")]
     pub discounts: Option<Vec<TransactionDisplayDiscount>>,
+    /// The amount of any value added taxes which apply to the item.
+    #[serde(rename = "taxAmount", default)]
+    pub tax_amount: String,
+    /// The tax rate as a percentage. Example: '8.5' for 8.5% tax rate.
+    #[serde(rename = "taxRate", default)]
+    pub tax_rate: String,
+    /// How tax was applied to discounted items. '0' = no discount, '1' = tax calculated after
+/// discount, '2' = taxcalculated before discount.
+    #[serde(rename = "discountCode", default)]
+    pub discount_code: String,
 
 }
 
