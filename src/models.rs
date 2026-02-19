@@ -2180,6 +2180,10 @@ pub struct CaptureRequest {
     /// Which shipment this particular capture is for.
     #[serde(rename = "shipmentNumber")]
     pub shipment_number: i32,
+    /// A passthrough surcharge amount. This surcharge amount will be passed directly to the
+/// gateway and is not directly calculated.
+    #[serde(rename = "passthroughSurcharge", default)]
+    pub passthrough_surcharge: String,
 
 }
 
