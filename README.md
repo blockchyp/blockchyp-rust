@@ -93,6 +93,65 @@ These are the core payment APIs used to execute and work with payment transactio
 
 
 
+#### Surcharge Review
+
+
+
+* **API Credential Types:** Merchant
+* **Required Role:** Payment API Access
+
+This API calculates surcharge information for a payment request.
+
+If you're using BlockChyp's surcharging features, you can use this endpoint
+to preview the surcharge amounts before processing a transaction. This allows
+you to display accurate pricing information to customers before completing
+the payment.
+
+
+
+
+```rust
+use blockchyp;
+use std::error::Error;
+
+fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
+    // sample credentials
+    let creds = blockchyp::APICredentials {
+        api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
+        bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
+        signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
+    };
+
+    // instantiate the client
+    let client = blockchyp::Client::new(creds);
+
+    let request = blockchyp::PricingRequest{
+
+        ..Default::default()
+    };
+    let (response, err) = client.surcharge_review(&request);
+
+    if let Some(e) = err {
+        eprintln!("Unexpected error occurred: {:?}", e);
+        return Err(e)
+    }
+
+    if response.success {
+		println!("Success");
+	}
+
+    println!("Response: {:?}", response);
+    Ok(())
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    surcharge_review_example()?;
+    println!("Example completed successfully!");
+    Ok(())
+}
+
+```
+
 #### Charge
 
 
