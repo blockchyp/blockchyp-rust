@@ -1490,6 +1490,12 @@ pub struct AuthorizationRequest {
     /// The purchase order date.
     #[serde(rename = "orderDate", default)]
     pub order_date: Option<DateTime<Utc>>,
+    /// The number of shipments the original authorization will be broken into.
+    #[serde(rename = "shipmentCount")]
+    pub shipment_count: i32,
+    /// Which shipment this particular capture is for.
+    #[serde(rename = "shipmentNumber")]
+    pub shipment_number: i32,
 
 }
 
