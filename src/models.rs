@@ -2340,6 +2340,9 @@ pub struct CaptureResponse {
     /// Customer data, if any.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
+    /// Whether enhanced data was passed for the transaction.
+    #[serde(rename = "enhancedDataPassed", default)]
+    pub enhanced_data_passed: Option<bool>,
 
 }
 
@@ -3381,6 +3384,9 @@ pub struct AuthorizationResponse {
     /// Details about a payment card derived from its BIN/IIN.
     #[serde(rename = "cardMetadata", default)]
     pub card_metadata: Option<CardMetadata>,
+    /// Whether enhanced data was passed for the transaction.
+    #[serde(rename = "enhancedDataPassed", default)]
+    pub enhanced_data_passed: Option<bool>,
 
 }
 
