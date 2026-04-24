@@ -8421,6 +8421,45 @@ pub struct SurchargeReviewResponse {
 
 }
 
+/// Models a request for short-lived API credentials.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct TransientKeyRequest {
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// Restricts the returned credentials to a single API call when true.
+    #[serde(rename = "oneTime", default)]
+    pub one_time: bool,
+
+}
+
+/// Models a response containing short-lived API credentials.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct TransientKeyResponse {
+    /// Whether or not the request succeeded.
+    #[serde(rename = "success")]
+    pub success: bool,
+    /// The error, if an error occurred.
+    #[serde(rename = "error")]
+    pub error: String,
+    /// A narrative description of the transaction result.
+    #[serde(rename = "responseDescription")]
+    pub response_description: String,
+    /// The transient API key.
+    #[serde(rename = "apiKey")]
+    pub api_key: String,
+    /// The transient bearer token.
+    #[serde(rename = "bearerToken")]
+    pub bearer_token: String,
+    /// The transient signing key.
+    #[serde(rename = "signingKey")]
+    pub signing_key: String,
+
+}
+
 
 
 /// A request for customer signature data.
