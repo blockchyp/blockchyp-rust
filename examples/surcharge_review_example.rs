@@ -12,7 +12,7 @@ fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
     // instantiate the client
     let client = blockchyp::Client::new(creds);
 
-    let request = blockchyp::PricingRequest{
+    let request = blockchyp::SurchargeReviewRequest{
 
         ..Default::default()
     };

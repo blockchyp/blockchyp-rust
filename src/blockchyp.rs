@@ -1381,8 +1381,8 @@ impl Client {
 		(response, err)
 	}
     /// Calculates surcharge information for a payment request.
-	pub fn surcharge_review(&self, request: &PricingRequest) -> (PricingResponse, Option<Box<dyn Error>>) {
-		let mut response = PricingResponse::default();
+	pub fn surcharge_review(&self, request: &SurchargeReviewRequest) -> (SurchargeReviewResponse, Option<Box<dyn Error>>) {
+		let mut response = SurchargeReviewResponse::default();
 		let response_err = self.gateway_request("/api/surcharge-review", "POST", request, &mut response, request.test, Some(request.timeout));
 
 		let err = if let Err(e) = response_err {

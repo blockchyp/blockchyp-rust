@@ -1496,6 +1496,9 @@ pub struct AuthorizationRequest {
     /// Which shipment this particular capture is for.
     #[serde(rename = "shipmentNumber")]
     pub shipment_number: i32,
+    /// An optional field that can be used to pass through data to external partners.
+    #[serde(rename = "externalPartnerMetadata", default)]
+    pub external_partner_metadata: String,
 
 }
 
@@ -8261,120 +8264,87 @@ pub struct SubmitApplicationRequest {
 
 }
 
-/// Models settings related to state checks for a merchant.
+/// Models a surcharge review request.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct StateCheckSettings {
-    /// If state checks are enabled for the merchant.
-    #[serde(rename = "enabled")]
-    pub enabled: bool,
-    /// The list of states that are exempt from surcharges.
-    #[serde(rename = "surchargeExemptStates")]
-    pub surcharge_exempt_states: Option<Vec<String>>,
-
-}
-
-/// Models merchant settings and configuration.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingMerchantSettings {
-    /// The merchant account identifier.
-    #[serde(rename = "account")]
-    pub account: String,
-    /// The gateway identifier.
-    #[serde(rename = "gateway")]
-    pub gateway: String,
-    /// Whether surcharging is enabled for the merchant.
-    #[serde(rename = "surchargingEnabled")]
-    pub surcharging_enabled: bool,
-    /// The custom surcharge percentage, if applicable.
-    #[serde(rename = "customSurchargePercent")]
-    pub custom_surcharge_percent: Option<f64>,
-    /// If reduced rate pricing is enabled.
-    #[serde(rename = "reducedRate")]
-    pub reduced_rate: Option<bool>,
-    /// If inverse pricing is enabled.
-    #[serde(rename = "inversePricingEnabled")]
-    pub inverse_pricing_enabled: Option<bool>,
-    /// The credit discount rate, if applicable.
-    #[serde(rename = "creditDiscountRate")]
-    pub credit_discount_rate: Option<f64>,
-    /// The acquiring solution identifier.
-    #[serde(rename = "acquiringSolution")]
-    pub acquiring_solution: String,
-    /// Whether the merchant accepts debit cards.
-    #[serde(rename = "acceptDebit")]
-    pub accept_debit: Option<bool>,
-    /// State check settings for the merchant.
-    #[serde(rename = "stateCheckSettings")]
-    pub state_check_settings: Option<StateCheckSettings>,
-
-}
-
-/// Models the attributes for a pricing request.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingRequestAttributes {
-    /// The card number for the pricing request.
-    #[serde(rename = "cardNumber")]
-    pub card_number: Option<String>,
-    /// The payment token.
-    #[serde(rename = "token")]
-    pub token: String,
-    /// The merchant identifier.
-    #[serde(rename = "merchantIdentifier")]
-    pub merchant_identifier: Option<String>,
-    /// The transaction amount.
-    #[serde(rename = "amount")]
-    pub amount: f64,
-    /// The country code.
-    #[serde(rename = "country")]
-    pub country: Option<String>,
-    /// The postal code.
-    #[serde(rename = "postalCode")]
-    pub postal_code: Option<String>,
-    /// The state or province.
-    #[serde(rename = "state")]
-    pub state: Option<String>,
-    /// Merchant settings for the pricing request.
-    #[serde(rename = "merchantSettings")]
-    pub merchant_settings: Option<PricingMerchantSettings>,
-
-}
-
-/// Models the data wrapper for a pricing request.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingRequestData {
-    /// The type of the request.
-    #[serde(rename = "type")]
-    pub type_yo: String,
-    /// The pricing request attributes.
-    #[serde(rename = "attributes")]
-    pub attributes: PricingRequestAttributes,
-
-}
-
-/// Models a pricing request.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingRequest {
+pub struct SurchargeReviewRequest {
     /// The request timeout in seconds.
     #[serde(rename = "timeout")]
     pub timeout: i32,
     /// Whether or not to route transaction to the test gateway.
     #[serde(rename = "test")]
     pub test: bool,
-    /// The pricing request data.
-    #[serde(rename = "data")]
-    pub data: PricingRequestData,
+    /// The card number for the pricing request.
+    #[serde(rename = "cardNumber")]
+    pub card_number: Option<String>,
+    /// The payment token.
+    #[serde(rename = "token")]
+    pub token: Option<String>,
+    /// The transaction amount.
+    #[serde(rename = "amount")]
+    pub amount: Option<String>,
+    /// The surcharge rate.
+    #[serde(rename = "surchargeRate")]
+    pub surcharge_rate: Option<String>,
+    /// The debit transaction fee.
+    #[serde(rename = "debitTransFee")]
+    pub debit_trans_fee: Option<String>,
+    /// The debit discount rate.
+    #[serde(rename = "debitDiscountRate")]
+    pub debit_discount_rate: Option<String>,
+    /// The surcharge policy.
+    #[serde(rename = "surchargePolicy")]
+    pub surcharge_policy: String,
+    /// The list of excluded merchant states.
+    #[serde(rename = "excludedMerchantStates")]
+    pub excluded_merchant_states: Option<Vec<String>>,
+    /// The zip code.
+    #[serde(rename = "zip")]
+    pub zip: String,
+    /// The state or province.
+    #[serde(rename = "state")]
+    pub state: String,
+    /// If foreign cards are exempt.
+    #[serde(rename = "exemptForeignCards")]
+    pub exempt_foreign_cards: bool,
+    /// The surcharging mode.
+    #[serde(rename = "surchargingMode")]
+    pub surcharging_mode: String,
+    /// The pricing plan.
+    #[serde(rename = "pricingPlan")]
+    pub pricing_plan: String,
 
 }
 
-/// Models pricing response data for new handler for pricing api responses.
+/// Models the data included in a surcharge review response.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingResponseAttributes {
+pub struct SurchargeReviewResponseData {
+    /// The type of the response.
+    #[serde(rename = "type")]
+    pub type_yo: String,
+    /// The attributes of the response.
+    #[serde(rename = "attributes")]
+    pub attributes: SurchargeAttributeResponseData,
+
+}
+
+/// Models the surcharge attributes included in a surcharge review response.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct SurchargeAttributeResponseData {
+    /// The total amount including surcharge.
+    #[serde(rename = "totalWithSurchargeAmount")]
+    pub total_with_surcharge_amount: String,
+    /// If the surcharge review was successful.
+    #[serde(rename = "success")]
+    pub success: bool,
+    /// The type of the response.
+    #[serde(rename = "type")]
+    pub type_yo: String,
     /// The surcharge percentage.
     #[serde(rename = "surchargePercent")]
-    pub surcharge_percent: f64,
+    pub surcharge_percent: String,
     /// The surcharge amount.
     #[serde(rename = "surchargeAmount")]
-    pub surcharge_amount: f64,
+    pub surcharge_amount: String,
     /// If the transaction is exempt from surcharges.
     #[serde(rename = "surchargeExempt")]
     pub surcharge_exempt: bool,
@@ -8391,53 +8361,51 @@ pub struct PricingResponseAttributes {
     #[serde(rename = "bin")]
     pub bin: String,
     /// The commercial card indicator.
-    #[serde(rename = "commercialIndicator")]
+    #[serde(rename = "commercialIndicator", default)]
     pub commercial_indicator: String,
+    /// If the card is commercial.
+    #[serde(rename = "isCommercial")]
+    pub is_commercial: bool,
+    /// If the card is Durbin-regulated (US debit).
+    #[serde(rename = "isRegulated")]
+    pub is_regulated: bool,
+    /// The reason for the exemption.
+    #[serde(rename = "exemptionReason", default)]
+    pub exemption_reason: String,
+    /// The debit fee amount.
+    #[serde(rename = "debitFeeAmount", default)]
+    pub debit_fee_amount: String,
     /// The disclosure statement.
-    #[serde(rename = "disclosure")]
-    pub disclosure: Option<String>,
+    #[serde(rename = "disclosure", default)]
+    pub disclosure: String,
     /// The debit card category.
-    #[serde(rename = "debitCategory")]
+    #[serde(rename = "debitCategory", default)]
     pub debit_category: String,
     /// The country where the card was issued.
-    #[serde(rename = "countryIssued")]
-    pub country_issued: String,
+    #[serde(rename = "countryCode")]
+    pub country_code: String,
+    /// Only included if state was sent in request OR derived from ZIP code.
+    #[serde(rename = "state", default)]
+    pub state: String,
     /// The unique identifier for the pricing response.
     #[serde(rename = "uuid")]
     pub uuid: String,
+    /// The expiration date of the card.
+    #[serde(rename = "expirationDate", default)]
+    pub expiration_date: String,
+    /// When surcharging is enabled AND state is 'CO' (Colorado-specific statutory
+/// language).
+    #[serde(rename = "disclosureAdditional", default)]
+    pub disclosure_additional: String,
+    /// The cardholder information.
+    #[serde(rename = "cardholderInfo", default)]
+    pub cardholder_info: String,
 
 }
 
-/// Models the data wrapper for a pricing response.
+/// Models a surcharge review response.
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingResponseData {
-    /// The type of the response.
-    #[serde(rename = "type")]
-    pub type_yo: String,
-    /// The pricing response attributes.
-    #[serde(rename = "attributes")]
-    pub attributes: PricingResponseAttributes,
-
-}
-
-/// Models an error response.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct ErrorType {
-    /// The HTTP status code.
-    #[serde(rename = "status")]
-    pub status: i32,
-    /// The error title.
-    #[serde(rename = "title")]
-    pub title: String,
-    /// The detailed error message.
-    #[serde(rename = "detail")]
-    pub detail: String,
-
-}
-
-/// Models a pricing response.
-#[derive(Debug, Default, Clone, Serialize, Deserialize)]
-pub struct PricingResponse {
+pub struct SurchargeReviewResponse {
     /// Whether or not the request succeeded.
     #[serde(rename = "success")]
     pub success: bool,
@@ -8447,9 +8415,9 @@ pub struct PricingResponse {
     /// A narrative description of the transaction result.
     #[serde(rename = "responseDescription")]
     pub response_description: String,
-    /// The pricing response data.
+    /// The data included in the surcharge review response.
     #[serde(rename = "data")]
-    pub data: PricingResponseData,
+    pub data: SurchargeReviewResponseData,
 
 }
 
