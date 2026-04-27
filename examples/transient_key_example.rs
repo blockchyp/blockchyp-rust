@@ -1,7 +1,7 @@
 use blockchyp;
 use std::error::Error;
 
-fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
+fn transient_key_example() -> Result<(), Box<dyn Error>> {
     // sample credentials
     let creds = blockchyp::APICredentials {
         api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
@@ -12,11 +12,11 @@ fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
     // instantiate the client
     let client = blockchyp::Client::new(creds);
 
-    let request = blockchyp::SurchargeReviewRequest{
+    let request = blockchyp::TransientKeyRequest{
 
         ..Default::default()
     };
-    let (response, err) = client.surcharge_review(&request);
+    let (response, err) = client.transient_key(&request);
 
     if let Some(e) = err {
         eprintln!("Unexpected error occurred: {:?}", e);
@@ -32,7 +32,7 @@ fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    surcharge_review_example()?;
+    transient_key_example()?;
     println!("Example completed successfully!");
     Ok(())
 }

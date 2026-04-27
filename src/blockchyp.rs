@@ -1381,9 +1381,31 @@ impl Client {
 		(response, err)
 	}
     /// Calculates surcharge information for a payment request.
-	pub fn surcharge_review(&self, request: &PricingRequest) -> (PricingResponse, Option<Box<dyn Error>>) {
-		let mut response = PricingResponse::default();
+	pub fn surcharge_review(&self, request: &SurchargeReviewRequest) -> (SurchargeReviewResponse, Option<Box<dyn Error>>) {
+		let mut response = SurchargeReviewResponse::default();
 		let response_err = self.gateway_request("/api/surcharge-review", "POST", request, &mut response, request.test, Some(request.timeout));
+
+		let err = if let Err(e) = response_err {
+            if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {
+                if reqwest_err.is_timeout() {
+                    response.response_description = RESPONSE_TIMED_OUT.to_string();
+                } else {
+                    response.response_description = e.to_string();
+                }
+            } else {
+                response.response_description = e.to_string();
+            }
+            Some(e)
+        } else {
+            None
+        };
+
+		(response, err)
+	}
+    /// Generates a short-lived API key scoped to terminal and payment operations.
+	pub fn transient_key(&self, request: &TransientKeyRequest) -> (TransientKeyResponse, Option<Box<dyn Error>>) {
+		let mut response = TransientKeyResponse::default();
+		let response_err = self.gateway_request("/api/transient-credentials", "POST", request, &mut response, request.test, Some(request.timeout));
 
 		let err = if let Err(e) = response_err {
             if let Some(reqwest_err) = e.downcast_ref::<reqwest::Error>() {

@@ -125,7 +125,7 @@ fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
     // instantiate the client
     let client = blockchyp::Client::new(creds);
 
-    let request = blockchyp::PricingRequest{
+    let request = blockchyp::SurchargeReviewRequest{
 
         ..Default::default()
     };
@@ -146,6 +146,53 @@ fn surcharge_review_example() -> Result<(), Box<dyn Error>> {
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     surcharge_review_example()?;
+    println!("Example completed successfully!");
+    Ok(())
+}
+
+```
+
+#### Transient Key
+
+Generates a short-lived API key scoped to terminal and payment operations.
+
+
+```rust
+use blockchyp;
+use std::error::Error;
+
+fn transient_key_example() -> Result<(), Box<dyn Error>> {
+    // sample credentials
+    let creds = blockchyp::APICredentials {
+        api_key: "ZDSMMZLGRPBPRTJUBTAFBYZ33Q".to_string(),
+        bearer_token: "ZLBW5NR4U5PKD5PNP3ZP3OZS5U".to_string(),
+        signing_key: "9c6a5e8e763df1c9256e3d72bd7f53dfbd07312938131c75b3bfd254da787947".to_string(),
+    };
+
+    // instantiate the client
+    let client = blockchyp::Client::new(creds);
+
+    let request = blockchyp::TransientKeyRequest{
+
+        ..Default::default()
+    };
+    let (response, err) = client.transient_key(&request);
+
+    if let Some(e) = err {
+        eprintln!("Unexpected error occurred: {:?}", e);
+        return Err(e)
+    }
+
+    if response.success {
+		println!("Success");
+	}
+
+    println!("Response: {:?}", response);
+    Ok(())
+}
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    transient_key_example()?;
     println!("Example completed successfully!");
     Ok(())
 }
