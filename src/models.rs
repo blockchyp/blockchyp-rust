@@ -1149,6 +1149,9 @@ pub struct CustomerToken {
     /// The card holder name.
     #[serde(rename = "cardHolderName", default)]
     pub card_holder_name: String,
+    /// Whether the token was enrolled with a CVV value present.
+    #[serde(rename = "hasCvv")]
+    pub has_cvv: bool,
     /// Models customer records associated with a payment token.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
@@ -2779,6 +2782,9 @@ pub struct EnrollResponse {
     /// The first 8 digits of the card aka the BIN.
     #[serde(rename = "bin", default)]
     pub bin: String,
+    /// Whether the token was enrolled with a CVV value present.
+    #[serde(rename = "hasCvv")]
+    pub has_cvv: bool,
 
 }
 
@@ -4667,7 +4673,7 @@ pub struct BatchDetailsResponse {
     /// The net volume for this batch, usually expected volume less daily fees volume.
     #[serde(rename = "netDeposit")]
     pub net_deposit: String,
-    /// The daily fees for this batch
+    /// The daily fees for this batch.
     #[serde(rename = "dailyFees")]
     pub daily_fees: String,
 
