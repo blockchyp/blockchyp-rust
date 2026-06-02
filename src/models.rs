@@ -1502,6 +1502,15 @@ pub struct AuthorizationRequest {
     /// An optional field that can be used to pass through data to external partners.
     #[serde(rename = "externalPartnerMetadata", default)]
     pub external_partner_metadata: String,
+    /// The external customer's email address.
+    #[serde(rename = "externalCustomerEmail", default)]
+    pub external_customer_email: String,
+    /// The external customer's phone number.
+    #[serde(rename = "externalCustomerPhone", default)]
+    pub external_customer_phone: String,
+    /// The external customer's company name.
+    #[serde(rename = "externalCustomerCompany", default)]
+    pub external_customer_company: String,
 
 }
 
