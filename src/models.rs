@@ -5130,6 +5130,12 @@ pub struct MerchantProfile {
     /// Whether the merchant should bypass an auth with TSYS on Enrollment.
     #[serde(rename = "bypassEnrollAuthEnabled")]
     pub bypass_enroll_auth_enabled: bool,
+    /// That the merchant follows the partner's service fee settings.
+    #[serde(rename = "followPartnerServiceFeeEnabled")]
+    pub follow_partner_service_fee_enabled: bool,
+    /// That the merchant is configured to apply a service fee.
+    #[serde(rename = "serviceFeeEnabled")]
+    pub service_fee_enabled: bool,
 
 }
 
@@ -5343,6 +5349,12 @@ pub struct MerchantProfileResponse {
     /// Whether the merchant should bypass an auth with TSYS on Enrollment.
     #[serde(rename = "bypassEnrollAuthEnabled")]
     pub bypass_enroll_auth_enabled: bool,
+    /// That the merchant follows the partner's service fee settings.
+    #[serde(rename = "followPartnerServiceFeeEnabled")]
+    pub follow_partner_service_fee_enabled: bool,
+    /// That the merchant is configured to apply a service fee.
+    #[serde(rename = "serviceFeeEnabled")]
+    pub service_fee_enabled: bool,
 
 }
 
