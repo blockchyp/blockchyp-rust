@@ -5136,6 +5136,12 @@ pub struct MerchantProfile {
     /// That the merchant is configured to apply a service fee.
     #[serde(rename = "serviceFeeEnabled")]
     pub service_fee_enabled: bool,
+    /// That the merchant follows the partner's CVV cache settings.
+    #[serde(rename = "followPartnerCvvCacheEnabled")]
+    pub follow_partner_cvv_cache_enabled: bool,
+    /// That the merchant is configured to apply a CVV cache.
+    #[serde(rename = "cvvCacheEnabled")]
+    pub cvv_cache_enabled: bool,
 
 }
 
@@ -5355,6 +5361,12 @@ pub struct MerchantProfileResponse {
     /// That the merchant is configured to apply a service fee.
     #[serde(rename = "serviceFeeEnabled")]
     pub service_fee_enabled: bool,
+    /// That the merchant follows the partner's CVV cache settings.
+    #[serde(rename = "followPartnerCvvCacheEnabled")]
+    pub follow_partner_cvv_cache_enabled: bool,
+    /// That the merchant is configured to apply a CVV cache.
+    #[serde(rename = "cvvCacheEnabled")]
+    pub cvv_cache_enabled: bool,
 
 }
 
