@@ -8343,8 +8343,8 @@ pub struct SurchargeReviewRequest {
     #[serde(rename = "state")]
     pub state: String,
     /// If foreign cards are exempt.
-    #[serde(rename = "exemptForeignCards")]
-    pub exempt_foreign_cards: bool,
+    #[serde(rename = "exemptForeignCards", default)]
+    pub exempt_foreign_cards: Option<bool>,
     /// The surcharging mode.
     #[serde(rename = "surchargingMode")]
     pub surcharging_mode: String,
