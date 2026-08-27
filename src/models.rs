@@ -292,6 +292,9 @@ pub struct ReceiptSuggestions {
 /// surcharges.
     #[serde(rename = "cashDiscount", default)]
     pub cash_discount: String,
+    /// The amount added to the transaction to cover processing fees.
+    #[serde(rename = "serviceFeeAmount", default)]
+    pub service_fee_amount: String,
 
 }
 
@@ -1254,7 +1257,7 @@ pub struct AuthorizationRequest {
     #[serde(rename = "testCase", default)]
     pub test_case: String,
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token", default)]
     pub token: String,
     /// Track 1 magnetic stripe data.
@@ -1598,7 +1601,7 @@ pub struct CardMetadataRequest {
     #[serde(rename = "testCase", default)]
     pub test_case: String,
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token", default)]
     pub token: String,
     /// Track 1 magnetic stripe data.
@@ -1786,7 +1789,7 @@ pub struct BalanceRequest {
     #[serde(rename = "testCase", default)]
     pub test_case: String,
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token", default)]
     pub token: String,
     /// Track 1 magnetic stripe data.
@@ -2001,7 +2004,7 @@ pub struct RefundRequest {
     #[serde(rename = "testCase", default)]
     pub test_case: String,
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token", default)]
     pub token: String,
     /// Track 1 magnetic stripe data.
@@ -2355,6 +2358,9 @@ pub struct CaptureResponse {
     /// Customer data, if any.
     #[serde(rename = "customers")]
     pub customers: Option<Vec<Customer>>,
+    /// The current status of a transaction.
+    #[serde(rename = "status", default)]
+    pub status: String,
     /// Whether enhanced data was passed for the transaction.
     #[serde(rename = "enhancedDataPassed", default)]
     pub enhanced_data_passed: Option<bool>,
@@ -2523,6 +2529,9 @@ pub struct VoidResponse {
     /// The hex encoded signature data.
     #[serde(rename = "sigFile", default)]
     pub sig_file: String,
+    /// The current status of a transaction.
+    #[serde(rename = "status", default)]
+    pub status: String,
 
 }
 
@@ -2568,7 +2577,7 @@ pub struct EnrollRequest {
     #[serde(rename = "testCase", default)]
     pub test_case: String,
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token", default)]
     pub token: String,
     /// Track 1 magnetic stripe data.
@@ -8343,8 +8352,8 @@ pub struct SurchargeReviewRequest {
     #[serde(rename = "state")]
     pub state: String,
     /// If foreign cards are exempt.
-    #[serde(rename = "exemptForeignCards")]
-    pub exempt_foreign_cards: bool,
+    #[serde(rename = "exemptForeignCards", default)]
+    pub exempt_foreign_cards: Option<bool>,
     /// The surcharging mode.
     #[serde(rename = "surchargingMode")]
     pub surcharging_mode: String,
@@ -8949,7 +8958,7 @@ pub struct PaymentAmounts {
 #[derive(Debug, Default, Clone, Serialize, Deserialize)]
 pub struct PaymentMethod {
     /// The payment token to be used for this transaction. This should be used for recurring
-/// transactions.
+/// transactions. The /enroll endpoint ignores this field.
     #[serde(rename = "token")]
     pub token: String,
     /// Track 1 magnetic stripe data.
