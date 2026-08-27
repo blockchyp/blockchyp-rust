@@ -292,6 +292,9 @@ pub struct ReceiptSuggestions {
 /// surcharges.
     #[serde(rename = "cashDiscount", default)]
     pub cash_discount: String,
+    /// The amount added to the transaction to cover processing fees.
+    #[serde(rename = "serviceFeeAmount", default)]
+    pub service_fee_amount: String,
 
 }
 
