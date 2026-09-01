@@ -8360,6 +8360,12 @@ pub struct SurchargeReviewRequest {
     /// The pricing plan.
     #[serde(rename = "pricingPlan")]
     pub pricing_plan: String,
+    /// The Stax merchant UUID for cross-system tracing.
+    #[serde(rename = "staxMerchantId")]
+    pub stax_merchant_id: Option<String>,
+    /// The Stax transaction UUID for cross-system tracing.
+    #[serde(rename = "staxTransactionId")]
+    pub stax_transaction_id: Option<String>,
 
 }
 
