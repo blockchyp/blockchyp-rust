@@ -8487,6 +8487,9 @@ pub struct TransientKeyRequest {
     /// Restricts the returned credentials to a single API call when true.
     #[serde(rename = "oneTime", default)]
     pub one_time: bool,
+    /// The user ID associated with the transient credentials.
+    #[serde(rename = "userId", default)]
+    pub user_id: Option<String>,
 
 }
 
