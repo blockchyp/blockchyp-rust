@@ -1514,6 +1514,10 @@ pub struct AuthorizationRequest {
     /// The external customer's company name.
     #[serde(rename = "externalCustomerCompany", default)]
     pub external_customer_company: String,
+    /// The external merchant's own reference for the transaction. It is stored with the
+/// transaction and echoed back on the response, and is not used for duplicate detection.
+    #[serde(rename = "externalTransactionRef", default)]
+    pub external_transaction_ref: String,
 
 }
 
@@ -3414,6 +3418,10 @@ pub struct AuthorizationResponse {
     /// Whether enhanced data was passed for the transaction.
     #[serde(rename = "enhancedDataPassed", default)]
     pub enhanced_data_passed: Option<bool>,
+    /// The external merchant's own reference for the transaction. It is stored with the
+/// transaction and echoed back on the response, and is not used for duplicate detection.
+    #[serde(rename = "externalTransactionRef", default)]
+    pub external_transaction_ref: String,
 
 }
 
