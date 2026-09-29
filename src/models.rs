@@ -1514,6 +1514,10 @@ pub struct AuthorizationRequest {
     /// The external customer's company name.
     #[serde(rename = "externalCustomerCompany", default)]
     pub external_customer_company: String,
+    /// The external merchant's own reference for the transaction. It is stored with the
+/// transaction and echoed back on the response, and is not used for duplicate detection.
+    #[serde(rename = "externalTransactionRef", default)]
+    pub external_transaction_ref: String,
 
 }
 
@@ -3414,6 +3418,10 @@ pub struct AuthorizationResponse {
     /// Whether enhanced data was passed for the transaction.
     #[serde(rename = "enhancedDataPassed", default)]
     pub enhanced_data_passed: Option<bool>,
+    /// The external merchant's own reference for the transaction. It is stored with the
+/// transaction and echoed back on the response, and is not used for duplicate detection.
+    #[serde(rename = "externalTransactionRef", default)]
+    pub external_transaction_ref: String,
 
 }
 
@@ -8360,6 +8368,12 @@ pub struct SurchargeReviewRequest {
     /// The pricing plan.
     #[serde(rename = "pricingPlan")]
     pub pricing_plan: String,
+    /// The Stax merchant UUID for cross-system tracing.
+    #[serde(rename = "staxMerchantId")]
+    pub stax_merchant_id: Option<String>,
+    /// The Stax transaction UUID for cross-system tracing.
+    #[serde(rename = "staxTransactionId")]
+    pub stax_transaction_id: Option<String>,
 
 }
 
@@ -8481,6 +8495,9 @@ pub struct TransientKeyRequest {
     /// Restricts the returned credentials to a single API call when true.
     #[serde(rename = "oneTime", default)]
     pub one_time: bool,
+    /// The user ID associated with the transient credentials.
+    #[serde(rename = "userId", default)]
+    pub user_id: Option<String>,
 
 }
 
@@ -8505,6 +8522,58 @@ pub struct TransientKeyResponse {
     /// The transient signing key.
     #[serde(rename = "signingKey")]
     pub signing_key: String,
+
+}
+
+/// Models a request for terminal service fees.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct ServiceFeeRequest {
+    /// The request timeout in seconds.
+    #[serde(rename = "timeout")]
+    pub timeout: i32,
+    /// Whether or not to route transaction to the test gateway.
+    #[serde(rename = "test")]
+    pub test: bool,
+    /// The name of the target payment terminal.
+    #[serde(rename = "terminalName", default)]
+    pub terminal_name: String,
+    /// Forces the terminal cloud connection to be reset while a transactions is in flight.
+/// This is a diagnostic settings that can be used only for test transactions.
+    #[serde(rename = "resetConnection")]
+    pub reset_connection: bool,
+    /// The primary account number (PAN) of the card.
+    #[serde(rename = "pan")]
+    pub pan: String,
+    /// The transaction amount.
+    #[serde(rename = "amount")]
+    pub amount: String,
+    /// The terminal DUKPT key for the request.
+    #[serde(rename = "terminalDukptKey")]
+    pub terminal_dukpt_key: String,
+    /// The hex encoded transaction entropy used to derive the DUKPT transaction key.
+    #[serde(rename = "transactionEntropy")]
+    pub transaction_entropy: String,
+
+}
+
+/// Models a response for terminal service fees.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct ServiceFeeResponse {
+    /// Whether or not the request succeeded.
+    #[serde(rename = "success")]
+    pub success: bool,
+    /// The error, if an error occurred.
+    #[serde(rename = "error")]
+    pub error: String,
+    /// A narrative description of the transaction result.
+    #[serde(rename = "responseDescription")]
+    pub response_description: String,
+    /// The amount of the service fee.
+    #[serde(rename = "serviceFeeAmount")]
+    pub service_fee_amount: String,
+    /// The total transaction amount including the service fee.
+    #[serde(rename = "totalWithServiceFee")]
+    pub total_with_service_fee: String,
 
 }
 
@@ -8679,6 +8748,15 @@ pub struct TerminalDeleteQueuedTransactionRequest {
     pub api_credentials: APICredentials,
     #[serde(rename = "request")]
     pub request: DeleteQueuedTransactionRequest,
+}
+
+/// Models a request for terminal service fees.
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+pub struct TerminalServiceFeeRequest {
+    #[serde(flatten)]
+    pub api_credentials: APICredentials,
+    #[serde(rename = "request")]
+    pub request: ServiceFeeRequest,
 }
 
 
