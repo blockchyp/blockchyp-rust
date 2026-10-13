@@ -4973,6 +4973,9 @@ pub struct MerchantProfile {
     /// The contact number for the merchant.
     #[serde(rename = "contactNumber")]
     pub contact_number: String,
+    /// The contact email address for the merchant.
+    #[serde(rename = "contactEmail")]
+    pub contact_email: String,
     /// The location name.
     #[serde(rename = "locationName")]
     pub location_name: String,
@@ -5198,6 +5201,9 @@ pub struct MerchantProfileResponse {
     /// The contact number for the merchant.
     #[serde(rename = "contactNumber")]
     pub contact_number: String,
+    /// The contact email address for the merchant.
+    #[serde(rename = "contactEmail")]
+    pub contact_email: String,
     /// The location name.
     #[serde(rename = "locationName")]
     pub location_name: String,
